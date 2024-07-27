@@ -55,44 +55,73 @@ export default function Home() {
                 <ArrowRight className="ml-1.5 h-5 w-5" />
               </Link>
             </div>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-2 lg:w-3/5">
-              <div className="h-full stat p-4 bg-base-300 rounded-2xl gap-2 bg-gradient-to-r from-cyan-500 to-blue-500 text-white">
-                <span className="stat-title font-semibold uppercase whitespace-normal leading-3 text-sm opacity-100 text-gray-100">
-                  <div className="inline text-lg mr-2">📚</div>Read
-                </span>
-                <span className="stat-value overflow-hidden">18 <span className="unit">books</span></span>
-                <span className="stat-desc whitespace-normal opacity-100 text-gray-200">I'll read for <span className="value">3 days, 19 hours</span></span>
-              </div>
-              <div className="h-full stat p-4 bg-base-300 rounded-2xl gap-2 bg-gradient-to-r from-pink-500 to-yellow-500 text-white">
-                <span className="stat-title font-semibold uppercase whitespace-normal leading-3 text-sm opacity-100 text-gray-100">
-                  <div className="inline text-lg mr-2">💦</div>Workout
-                </span>
-                <span className="stat-value overflow-hidden">62.4k <span className="unit">calories</span></span>
-                <span className="stat-desc whitespace-normal opacity-100 text-gray-200">Or <span className="value">116</span> Big Macs 🍔 I'll workout for <span className="value">4 days, 8 hours</span></span>
-              </div>
-              <div className="h-full stat p-4 bg-base-300 rounded-2xl gap-2 col-span-2 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white">
-                <span className="stat-title font-semibold uppercase whitespace-normal leading-3 text-sm opacity-100 text-gray-100">
-                  <div className="inline text-lg mr-2">🇬🇧</div>Learn Language
-                </span>
-                <span className="stat-value overflow-hidden">2.81k <span className="unit">new words</span></span>
-                <span className="stat-desc whitespace-normal opacity-100 text-gray-200"><span className="value">94%</span> of what's needed to carry everyday conversations</span>
-              </div>
-              <div className="h-full stat p-4 bg-base-300 rounded-2xl gap-2 bg-gradient-to-r from-cyan-500 to-blue-500 text-white">
-                <span className="stat-title font-semibold uppercase whitespace-normal leading-3 text-sm opacity-100 text-gray-100">
-                  <div className="inline text-lg mr-2">👟</div>Walk
-                </span>
-                <span className="stat-value overflow-hidden">364k <span className="unit">steps</span></span>
-                <span className="stat-desc whitespace-normal opacity-100 text-gray-200">Or <span className="value">277</span> km. That's <span className="value">838</span> Eiffel Tower 🗼</span>
-              </div>
-              <div className="h-full stat p-4 bg-base-300 rounded-2xl gap-2 lg:col-span-2 lg:col-start-2 bg-gradient-to-r from-pink-500 to-yellow-500 text-white">
-                <span className="stat-title font-semibold uppercase whitespace-normal leading-3 text-sm opacity-100 text-gray-100">
-                  <div className="inline text-lg mr-2">🎸</div>Learn Instrument
-                </span>
-                <span className="stat-value overflow-hidden">2 days <span className="unit">(52 hours)</span></span>
-                <span className="stat-desc whitespace-normal opacity-100 text-gray-200">Or <span className="value">108</span>% of the time Mozart took to write Linz symphony</span>
-              </div>
-              <div className="col-span-full text-center text-sm md:order-first md:text-left">Habits Grid example for 2024</div>
-            </div>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 lg:w-3/5 mx-auto">
+  <div className="h-full stat p-4 bg-base-300 rounded-2xl gap-2 bg-gradient-to-r from-cyan-500 to-blue-500 text-white">
+    <span className="stat-title font-semibold uppercase whitespace-normal leading-3 text-sm opacity-100 text-gray-100">
+      <div className="inline text-lg mr-2">📖</div>Read Quran
+    </span>
+    <span className="stat-value overflow-hidden text-xl">
+      
+    </span>
+    <div>
+    <span className="stat-desc whitespace-normal opacity-100 text-gray-200 text-sm">
+      I'll read 2 pages every day until I finish the entire Quran.
+    </span>
+    </div>
+  </div>
+  <div className="h-full stat p-4 pb-2 bg-base-300 rounded-2xl gap-2 bg-gradient-to-r from-pink-500 to-yellow-500 text-white">
+    <span className="stat-title font-semibold uppercase whitespace-normal leading-3 text-sm opacity-100 text-gray-100">
+      <div className="inline text-lg mr-2">📿</div>Make Thikr
+    </span>
+    <span className="stat-value overflow-hidden text-xl">
+      
+    </span>
+    <div>
+    <span className="stat-desc whitespace-normal opacity-100 text-gray-200 text-sm">
+      I'll dedicate 10 minutes every day to make thikr and remember Allah (SWT).
+    </span>
+    </div>
+  </div>
+  <div className="h-full stat p-4 pb-2 bg-base-300 rounded-2xl gap-2 col-span-2 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white">
+    <span className="stat-title font-semibold uppercase whitespace-normal leading-3 text-sm opacity-100 text-gray-100">
+      <div className="inline text-lg mr-2">🕌</div>Pray Nafl
+    </span>
+    <span className="stat-value overflow-hidden text-xl">
+      
+    </span>
+    <div>
+    <span className="stat-desc whitespace-normal opacity-100 text-gray-200 text-sm">
+      I'll pray 2 rakat of nafl in the morning and 2 rakat in the evening until I have prayed 100 nafl.
+    </span>
+    </div>
+  </div>
+  <div className="h-full stat p-4 pb-2 bg-base-300 rounded-2xl gap-2 bg-gradient-to-r from-cyan-500 to-blue-500 text-white">
+    <span className="stat-title font-semibold uppercase whitespace-normal leading-3 text-sm opacity-100 text-gray-100">
+      <div className="inline text-lg mr-2">💚</div>Send Salawat
+    </span>
+    <span className="stat-value overflow-hidden text-xl">
+    
+    </span>
+    <div>
+    <span className="stat-desc whitespace-normal opacity-100 text-gray-200 text-sm">
+    I'll set a goal of sending 50 Salawat every day.
+    </span>
+    </div>
+  </div>
+  <div className="h-full stat p-4 pb-2 bg-base-300 rounded-2xl gap-2 lg:col-span-2 lg:col-start-2 bg-gradient-to-r from-pink-500 to-yellow-500 text-white">
+    <span className="stat-title font-semibold uppercase whitespace-normal leading-3 text-sm opacity-100 text-gray-100">
+      <div className="inline text-lg mr-2">📜</div>Recite Athkar
+    </span>
+    
+    <div>
+    <span className="stat-desc whitespace-normal opacity-100 text-gray-200 text-sm">
+      I'll recite my morning and evening athkar every day.
+    </span>
+    </div>
+  </div>
+  <div className="col-span-full text-center text-sm md:order-first md:text-left">Habits Grid example for 2024</div>
+</div>
+
           </section>
         </div>
       </MaxWidthWrapper>
