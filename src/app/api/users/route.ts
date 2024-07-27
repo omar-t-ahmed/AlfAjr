@@ -22,6 +22,7 @@ async function findUser(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const id = searchParams.get('id');
   const username = searchParams.get('username');
+  const email = searchParams.get('email');
 
   try {
     if (id) {
@@ -32,6 +33,11 @@ async function findUser(req: NextRequest) {
     } else if (username) {
       const user = await db.user.findUnique({
         where: { username: username },
+      });
+      return user ? NextResponse.json(user) : NextResponse.json({ error: 'User not found' }, { status: 404 });
+    } else if (email) {
+      const user = await db.user.findUnique({
+        where: { email: email },
       });
       return user ? NextResponse.json(user) : NextResponse.json({ error: 'User not found' }, { status: 404 });
     } else {

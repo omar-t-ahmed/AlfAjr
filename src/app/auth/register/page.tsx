@@ -3,6 +3,7 @@ import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 import { signUp, googleSignUp } from "@/lib/auth";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import axios from "axios";
 
 const Register = () => {
     const [email, setEmail] = useState("");
@@ -14,23 +15,88 @@ const Register = () => {
     const handleSignUp = async () => {
         try {
             if (password === confirmPassword) {
-                await signUp(email, password);
-                router.push("/");
+                try {
+                    // Check if user exists
+                    const response = await axios.get(
+                        `/api/users?email=${email}`
+                    );
+                    const user = response.data;
+
+                    if (user.error) {
+                        // User does not exist, proceed with sign-up
+                        await signUp(email, password);
+
+                        // Create new user in the database
+                        await axios.post("/api/users", {
+                            email,
+                            totalReward: 0,
+                            friends: [],
+                        });
+
+                        router.push("/");
+                    } else {
+                        setError("Email already in use");
+                    }
+                } catch (error:any) {
+                    // If error occurs in fetching user, create the user
+                    if (error.response && error.response.status === 404) {
+                        await signUp(email, password);
+
+                        await axios.post("/api/users", {
+                            email,
+                            totalReward: 0,
+                            friends: [],
+                        });
+
+                        router.push("/");
+                    } else {
+                        throw error;
+                    }
+                }
             } else {
-                setError("Passwords don't match")
+                setError("Passwords don't match");
             }
         } catch (error) {
             setError("Failed to sign up");
         }
     };
+
     const handleGoogleSignUp = async () => {
         try {
             const user = await googleSignUp();
+            try {
+                // Check if the user exists in the database
+                const response = await axios.get(
+                    `/api/users?email=${user.email}`
+                );
+                const dbUser = response.data;
+                if (dbUser.error) {
+                    // User does not exist, create the user
+                    await axios.post("/api/users", {
+                        email: user.email,
+                        totalReward: 0,
+                        friends: [],
+                    });
+                }
+            } catch (error: any) {
+                // If error occurs in fetching user, create the user
+                if (error.response && error.response.status === 404) {
+                    await axios.post("/api/users", {
+                        email: user.email,
+                        totalReward: 0,
+                        friends: [],
+                    });
+                } else {
+                    throw error;
+                }
+            }
+
             router.push("/");
         } catch (error) {
             setError("Failed to sign in");
         }
     };
+
     return (
         <main className="bg-zinc-900 h-screen text-white">
             <MaxWidthWrapper className="py-4">
