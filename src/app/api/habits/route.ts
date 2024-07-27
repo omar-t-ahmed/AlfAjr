@@ -1,21 +1,20 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { db } from '@/app/db';
+import { db } from '@/app/db'; // Ensure this path is correct
 
-export async function handler(req: NextRequest) {
-  const { method } = req;
+export async function GET(req: NextRequest) {
+  return await getHabit(req);
+}
 
-  switch (method) {
-    case 'GET':
-      return await getHabit(req);
-    case 'POST':
-      return await createHabit(req);
-    case 'PATCH':
-      return await updateHabit(req);
-    case 'DELETE':
-      return await deleteHabit(req);
-    default:
-      return NextResponse.json({ error: `Method ${method} Not Allowed` }, { status: 405 });
-  }
+export async function POST(req: NextRequest) {
+  return await createHabit(req);
+}
+
+export async function PATCH(req: NextRequest) {
+  return await updateHabit(req);
+}
+
+export async function DELETE(req: NextRequest) {
+  return await deleteHabit(req);
 }
 
 async function getHabit(req: NextRequest) {
@@ -33,6 +32,7 @@ async function getHabit(req: NextRequest) {
       return NextResponse.json(habits);
     }
   } catch (error) {
+    console.error('Failed to fetch habits:', error);
     return NextResponse.json({ error: 'Failed to fetch habits' }, { status: 500 });
   }
 }
@@ -66,6 +66,7 @@ async function updateHabit(req: NextRequest) {
     });
     return NextResponse.json(habit);
   } catch (error) {
+    console.error('Failed to update habit:', error);
     return NextResponse.json({ error: 'Failed to update habit' }, { status: 500 });
   }
 }
@@ -80,8 +81,7 @@ async function deleteHabit(req: NextRequest) {
     });
     return NextResponse.json({ message: 'Habit deleted' });
   } catch (error) {
+    console.error('Failed to delete habit:', error);
     return NextResponse.json({ error: 'Failed to delete habit' }, { status: 500 });
   }
 }
-
-export { handler as GET, handler as POST, handler as PATCH, handler as DELETE };
