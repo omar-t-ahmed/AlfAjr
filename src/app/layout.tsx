@@ -4,8 +4,8 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Script from "next/script"
-import { Toaster } from "@/components/ui/toaster";
 import { CSPostHogProvider } from './providers'
+import { Toaster } from "@/components/ui/toaster";
 
 const bricolageGrotesque = Bricolage_Grotesque({
     subsets: ["latin"],
@@ -33,21 +33,6 @@ export default function RootLayout({
                     function gtag(){dataLayer.push(arguments);}
                     gtag('js', new Date());
 
-
-                    gtag('config', 'G-Y7PRV5YXL8');
-                    `
-                }
-            </Script>   
-            </head>
-            <body className={bricolageGrotesque.className}>
-                <Navbar />
-
-                {children}
-                <Footer />
-
-                <Toaster />
-            </body>
-
                     gtag('config', 'G-Y7PRV5YXL8');
                     `
                 }
@@ -60,9 +45,9 @@ export default function RootLayout({
 
                     {children}
                     <Footer />
+                <Toaster/>
                 </body>
             </CSPostHogProvider>
-
         </html>
     );
 }
