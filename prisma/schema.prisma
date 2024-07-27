@@ -8,7 +8,34 @@ generator client {
 }
 
 model User {
-  id    Int    @id @default(autoincrement())
-  name  String
-  email String @unique
+  id          Int      @id @default(autoincrement())
+  email       String   @unique
+  username    String   @unique
+  habits      Habit[]  @relation("UserHabits")
+  friends     String[]
+  totalReward Int
+}
+
+model Habit {
+  id            Int     @id @default(autoincrement())
+  userId        Int
+  user          User    @relation(fields: [userId], references: [id], name: "UserHabits")
+  worship       Worship
+  dailyQuantity Float
+  unit          Unit
+  reward        Float
+}
+
+enum Worship {
+  QURAN
+  SALAWAT
+  NAFL
+  MASJID
+}
+
+enum Unit {
+  VERSES
+  UNITS
+  MINUTES
+  VISITS
 }
