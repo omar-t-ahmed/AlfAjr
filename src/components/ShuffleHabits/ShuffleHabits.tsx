@@ -42,11 +42,13 @@ const habits = [
 ];
 
 const ShuffleHabits = () => {
-    const [currentHabit, setCurrentHabit] = useState(habits[0]);
+    const [currentHabit, setCurrentHabit] = useState(habits[0])
     
     const shuffleHabits = () => {
-        const shuffledHabit = habits[Math.floor(Math.random() * habits.length)];
-            setCurrentHabit(shuffledHabit);
+        const remainingHabits = habits.filter(habit => habit.title !== currentHabit.title)
+        const shuffledHabit = remainingHabits[Math.floor(Math.random() * remainingHabits.length)]
+
+        setCurrentHabit(shuffledHabit)
     };
 
     return (

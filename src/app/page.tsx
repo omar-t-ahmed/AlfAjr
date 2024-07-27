@@ -26,7 +26,7 @@ export default function Home() {
                     })}
                   >
                     {" "}
-                    Bismillah Create Habit Now
+                    Create Habit Now
                     <ArrowRight className="ml-1.5 h-5 w-5" />
                   </Link>
               </>
@@ -45,7 +45,7 @@ export default function Home() {
               </div>
               <p className="text-base-content/90">AlfAjr suggests good habits to pick in 2024. Discover how habits compound over 1 year, or 10 years to be motivated to start!</p>
               <Link
-                href="/app"
+                href="/habit/create"
                 className={buttonVariants({
                   size: "sm",
                   className: "bg-green-600 sm:flex items-center gap-1",

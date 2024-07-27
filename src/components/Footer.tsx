@@ -15,7 +15,7 @@ const Footer = () => {
           </div>
           <div className="flex items-center justify-center">
             <div className="flex space-x-8">
-            <Link
+            {/* <Link
                 href="/"
                 passHref
                 className="text-zinc-500 hover:text-zinc-100"
@@ -35,21 +35,21 @@ const Footer = () => {
                 className="text-sm text-zinc-500 hover:text-zinc-100"
               >
                 Personal Website
-              </Link>
+              </Link> */}
               <Link
-                href="#"
+                href="/terms"
                 className="text-sm text-zinc-500 hover:text-zinc-100"
               >
                 Terms
               </Link>
               <Link
-                href="#"
+                href="/privacy-policy"
                 className="text-sm text-zinc-500 hover:text-zinc-100"
               >
                 Privacy Policy
               </Link>
               <Link
-                href="#"
+                href="/cookie-policy"
                 className="text-sm text-zinc-500 hover:text-zinc-100"
               >
                 Cookie Policy
