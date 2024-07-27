@@ -27,15 +27,16 @@ model Habit {
 }
 
 enum Worship {
-  QURAN
-  SALAWAT
-  NAFL
-  MASJID
+  Quran
+  Salawat
+  Nafl
+  Masjid
+  Thikr
 }
 
 enum Unit {
-  VERSES
-  UNITS
-  MINUTES
-  VISITS
+  Verse
+  Unit
+  Minute
+  Visit
 }

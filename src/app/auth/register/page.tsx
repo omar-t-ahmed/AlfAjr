@@ -21,18 +21,15 @@ const Register = () => {
                         `/api/users?email=${email}`
                     );
                     const user = response.data;
-
                     if (user.error) {
                         // User does not exist, proceed with sign-up
                         await signUp(email, password);
-
                         // Create new user in the database
                         await axios.post("/api/users", {
                             email,
                             totalReward: 0,
                             friends: [],
                         });
-
                         router.push("/");
                     } else {
                         setError("Email already in use");
@@ -41,13 +38,11 @@ const Register = () => {
                     // If error occurs in fetching user, create the user
                     if (error.response && error.response.status === 404) {
                         await signUp(email, password);
-
                         await axios.post("/api/users", {
                             email,
                             totalReward: 0,
                             friends: [],
                         });
-
                         router.push("/");
                     } else {
                         throw error;
@@ -77,6 +72,8 @@ const Register = () => {
                         totalReward: 0,
                         friends: [],
                     });
+                } else {
+                    router.push("/")
                 }
             } catch (error: any) {
                 // If error occurs in fetching user, create the user

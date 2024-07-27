@@ -39,14 +39,18 @@ async function getHabit(req: NextRequest) {
 
 async function createHabit(req: NextRequest) {
   const { userId, worship, dailyQuantity, unit, reward } = await req.json();
+  
+  console.log('Incoming data:', { userId, worship, dailyQuantity, unit, reward });
 
   try {
     const habit = await db.habit.create({
       data: { userId, worship, dailyQuantity, unit, reward },
     });
+    console.log('Habit created successfully:', habit);
     return NextResponse.json(habit, { status: 201 });
-  } catch (error) {
-    return NextResponse.json({ error: 'Failed to create habit' }, { status: 500 });
+  } catch (error:any) {
+    console.error('Failed to create habit:', error.message, error.stack);
+    return NextResponse.json({ error: 'Failed to create habit', details: error.message }, { status: 500 });
   }
 }
 
