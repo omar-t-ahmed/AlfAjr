@@ -12,7 +12,7 @@ export default function Home() {
                     <div className="font-bold text-3xl mb-6">Home</div>
                     <>
                         <Link
-                            href="/create/habit"
+                            href="/habit/create"
                             className={buttonVariants({
                                 size: "sm",
                                 className:
