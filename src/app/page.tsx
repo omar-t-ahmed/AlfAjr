@@ -16,7 +16,7 @@ export default function Home() {
                   href="/habit/create"
                   className={buttonVariants({
                     size: "sm",
-                    className: "bg-green-600 hidden sm:flex items-center gap-1",
+                    className: "bg-green-600 sm:flex items-center gap-1",
                   })}
                 >
                   {" "}

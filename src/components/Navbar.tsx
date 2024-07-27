@@ -10,7 +10,7 @@ import { useAuth } from "@/lib/useAuth";
 const Navbar = () => {
     const { user } = useAuth();
     return (
-        <nav className="sticky z-[100] h-14 inset-x-0 top-0 w-full border-b border-gray-900 bg-zinc-800 backdrop-blir-lg transition-all text-white">
+        <nav className="sticky z-[100] h-14 inset-x-0 top-0 w-full border-b border-gray-900 bg-zinc-800 backdrop-blur-lg transition-all text-white">
             <MaxWidthWrapper>
                 {/* Title */}
                 <div className="flex h-14 items-center justify-between border-b border-zinc-900">
