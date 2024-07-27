@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Script from "next/script"
+import { CSPostHogProvider } from './providers'
 
 const bricolageGrotesque = Bricolage_Grotesque({
     subsets: ["latin"],
@@ -36,12 +37,15 @@ export default function RootLayout({
                 }
             </Script>   
             </head>
-            <body className={bricolageGrotesque.className}>
-                <Navbar />
+            
+            <CSPostHogProvider>
+                <body className={bricolageGrotesque.className}>
+                    <Navbar />
 
-                {children}
-                <Footer />
-            </body>
+                    {children}
+                    <Footer />
+                </body>
+            </CSPostHogProvider>
         </html>
     );
 }
