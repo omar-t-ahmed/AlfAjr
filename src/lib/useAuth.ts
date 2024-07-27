@@ -8,6 +8,7 @@ export const useAuth = () => {
     useEffect(() => {
         const unsubscribe = authStateListener((user) => {
             setUser(user);
+
         });
         return () => {
             if (typeof unsubscribe === "function") {
