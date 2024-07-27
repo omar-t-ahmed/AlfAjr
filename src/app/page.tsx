@@ -121,7 +121,6 @@ export default function Home() {
   </div>
   <div className="col-span-full text-center text-sm md:order-first md:text-left">Habits Grid example for 2024</div>
 </div>
-
           </section>
         </div>
       </MaxWidthWrapper>

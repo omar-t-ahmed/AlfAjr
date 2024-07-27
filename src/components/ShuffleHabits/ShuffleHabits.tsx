@@ -131,6 +131,7 @@ const ShuffleHabits = () => {
                 </button>
             </div>
         </div>
+
     );
 }
 
