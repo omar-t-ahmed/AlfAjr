@@ -102,7 +102,6 @@ const ShuffleHabits = () => {
         <div className="text-center mt-2">
         <button onClick={shuffleHabits} className="btn btn-ghost gap-3 fill-base-content">
             <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 animate-spin" viewBox="0 0 448 512">
-            {/* SVG path here */}
             </svg>
             Shuffle habits
         </button>
