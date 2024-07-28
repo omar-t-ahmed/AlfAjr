@@ -9,6 +9,7 @@ import { useAuth } from "@/lib/useAuth";
 import Image from "next/image";
 import logo from "../../public/alfajr-logo.png";
 import { ArrowRight } from "lucide-react";
+import HamburgerMenu from "@/components/ui/hamburgerMenu";
 
 const Navbar = () => {
     const { user } = useAuth();
