@@ -198,7 +198,7 @@ const CreateHabit = () => {
                                         type="submit"
                                         className="mt-6 bg-green-700 hover:bg-green-600/90 rounded-md w-48 text-white py-1.5 font-medium px-4 h-12 text-bold text-md"
                                     >
-                                        Create Habit 
+                                        Create Habit
                                     </button>
                                 </div>
                                 {error && (
@@ -211,41 +211,38 @@ const CreateHabit = () => {
                     </div>
                     <div className="mx-10">
                         {dailyQuantity && (
-                                <HabitStats
-                                    title={worship}
-                                    emoji="📖"
-                                    total={(
-                                        parseFloat(dailyQuantity as string) *
-                                        365
-                                    ).toString()}
-                                    goodDeeds={reward}
-                                    page={`${dailyQuantity} ${unit}`}
-                                    perDay="7 days"
-                                    unit={unit}
-                                    color={getColor(worship)}
-                                />
+                            <HabitStats
+                                title={worship}
+                                emoji="📖"
+                                total={(
+                                    parseFloat(dailyQuantity as string) * 365
+                                ).toString()}
+                                goodDeeds={reward}
+                                page={`${dailyQuantity} ${unit}`}
+                                perDay="7 days"
+                                unit={unit}
+                                color={getColor(worship)}
+                            />
                         )}
                     </div>
                 </div>
-                <MaxWidthWrapper>
-                    <div className="w-full flex flex-col items-center">
-                        <div className="text-slate-600 mt-12 w-[425px] sm:w-[500px] flex">
-                            <p>
-                                These Rewards are calculated according to
-                                narrations recorded in{" "}
-                                <span className="font-semibold">
-                                    Tirmidhi and The Musnad of Imam Ahmad
-                                </span>
-                                . Estimated rewards is a fun way of estimating
-                                your progress, but it is not a serious count.
-                                Allah(SWT) alone can accept, reject, or multiply
-                                your deeds as He wills, so make sure you have
-                                the right intentions and ask Allah(SWT) for the
-                                best of His reward.
-                            </p>
-                        </div>
+
+                <div className="w-full flex flex-col items-center">
+                    <div className="text-slate-600 mt-12 w-[425px] sm:w-[500px] flex">
+                        <p>
+                            These Rewards are calculated according to narrations
+                            recorded in{" "}
+                            <span className="font-semibold">
+                                Tirmidhi and The Musnad of Imam Ahmad
+                            </span>
+                            . Estimated rewards is a fun way of estimating your
+                            progress, but it is not a serious count. Allah(SWT)
+                            alone can accept, reject, or multiply your deeds as
+                            He wills, so make sure you have the right intentions
+                            and ask Allah(SWT) for the best of His reward.
+                        </p>
                     </div>
-                </MaxWidthWrapper>
+                </div>
             </MaxWidthWrapper>
         </main>
     );
