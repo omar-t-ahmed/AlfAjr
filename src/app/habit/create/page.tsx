@@ -139,7 +139,7 @@ const CreateHabit = () => {
             <MaxWidthWrapper className="py-4">
                 <div className="flex align-middle justify-around">
                     <div className="flex flex-col items-center">
-                    <div className="font-bold text-lg my-6 text-red-500 text-center">
+                    <div className="font-bold text-lg my-6 text-red-500 text-center w-[500px]">
                         THIS PAGE HAS LIMITED FUNCTIONALITY. IT IS CURRENTLY UNDER DEVELOPMENT. Full functionality will be available shortly!
                     </div>
                         <div className="font-bold text-3xl my-8">Create Habit</div>
@@ -209,7 +209,7 @@ const CreateHabit = () => {
                         )}
                     </div>
                 </div>
-                <div className="text-zinc-300 mt-12">
+                <div className="text-slate-600 mt-12 w-[500px]">
                                 <p>
                                     These Rewards are calculated according to
                                     narrations recorded in{" "}
