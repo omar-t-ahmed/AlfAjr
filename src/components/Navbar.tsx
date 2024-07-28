@@ -18,7 +18,7 @@ const Navbar = () => {
                 {/* Title */}
                 <div className="flex h-14 items-center justify-between border-b border-zinc-900">
                     <div className="flex justify-center items-center">
-                        <Image src={logo} className="h-5 w-5" alt="Logo" />
+                        <Image src={logo} className="hidden sm:block h-5 w-5" alt="Logo" />
                         <Link
                             href="/"
                             className="flex z-40 pl-2 pt-0.5 text-xl font-bold text-white"
@@ -46,6 +46,8 @@ const Navbar = () => {
                                         className={buttonVariants({
                                             size: "sm",
                                             variant: "ghost",
+                                            className:
+                                                " hidden sm:flex items-center ",
                                         })}
                                     >
                                         {" "}
