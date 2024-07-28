@@ -44,7 +44,7 @@ const CreateHabit = () => {
             case "Nafl":
                 setUnit("Unit");
                 break;
-            case "THIKR":
+            case "Thikr":
                 setUnit("Minute");
                 break;
             default:
@@ -68,7 +68,7 @@ const CreateHabit = () => {
                     setReward(quantity * 10);
                     break;
                 case "Nafl":
-                case "THIKR":
+                case "Thikr":
                     setReward(quantity * 1);
                     break;
                 default:
@@ -130,7 +130,7 @@ const CreateHabit = () => {
                 return "bg-gradient-to-r from-orange-600 to-amber-300";
             case "Nafl":
                 return "bg-gradient-to-r from-red-900 to-blue-500";
-            case "THIKR":
+            case "Thikr":
                 return "bg-gradient-to-r from-blue-500 to-blue-600";
             case "Masjid":
                 return "bg-gradient-to-r from-red-500 to-red-700";
@@ -168,7 +168,7 @@ const CreateHabit = () => {
                                             <SelectItem value="Nafl">
                                                 Nafl
                                             </SelectItem>
-                                            <SelectItem value="THIKR">
+                                            <SelectItem value="Thikr">
                                                 Thikr
                                             </SelectItem>
                                         </SelectGroup>
