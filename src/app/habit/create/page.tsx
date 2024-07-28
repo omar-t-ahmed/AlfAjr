@@ -12,6 +12,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
+
 import { useAuth } from "@/lib/useAuth";
 import HabitStats from "@/components/HabitStats/HabitStats";
 
@@ -51,7 +52,7 @@ const CreateHabit = () => {
         }
     };
 
-    const handleDailyQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+const handleDailyQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
         const quantity = value === '' ? '' : parseFloat(value);
         setDailyQuantity(quantity);
@@ -74,48 +75,68 @@ const CreateHabit = () => {
         } else {
             setReward(1);
         }
-    };
+ };
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        if (!user) {
-            setError("You must login to save the Habit!");
-            return;
-        }
+const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!user) {
+    setError("You must login to save the Habit!");
+    return;
+    }
 
-        try {
-            const userResponse = await axios.get(`/api/users?email=${newUser?.email}`);
-            const user = userResponse.data;
+    try {
+    // Fetch the user details to get the user ID
+    const userResponse = await axios.get(
+        `/api/users?email=${newUser?.email}`
+    );
+    const user = userResponse.data;
+      
+    if (!user || user.error) {
+        setError("User not found");
+        return;
+    }
 
-            if (!user || user.error) {
-                setError("User not found");
-                return;
-            }
+    const userId = user.id;
 
-            const userId = user.id;
+    await axios.post("/api/habits", {
+        userId,
+        worship,
+        dailyQuantity,
+        unit,
+        reward,
+    });
+    router.push("/habit/viewAll");
+    } catch (error) {
+    setError("Failed to create habit");
+    console.error("Failed to create habit", error);
+    }
+};
 
-            await axios.post("/api/habits", {
-                userId,
-                worship,
-                dailyQuantity,
-                unit,
-                reward,
-            });
-            router.push("/");
-        } catch (error) {
-            setError("Failed to create habit");
-            console.error("Failed to create habit", error);
-        }
-    };
+useEffect(() => {
+    if (user) {
+    setNewUser({
+        uid: user.uid,
+        email: user.email ?? "",
+    });
+    }
+}, [user]);
 
-    useEffect(() => {
-        if (user) {
-            setNewUser({
-                uid: user.uid,
-                email: user.email ?? "",
-            });
-        }
-    }, [user]);
+const getColor = (worship: string) => {
+    switch (worship) {
+    case "Quran":
+        return "bg-gradient-to-r from-emerald-500 to-teal-600";
+    case "Salawat":
+        return "bg-gradient-to-r from-orange-600 to-amber-300";
+    case "Nafl":
+        return "bg-gradient-to-r from-red-900 to-blue-500";
+    case "THIKR":
+        return "bg-gradient-to-r from-blue-500 to-blue-600";
+    case "Masjid":
+        return "bg-gradient-to-r from-red-500 to-red-700";
+    default:
+        return "bg-gradient-to-r from-zinc-500 to-zinc-600";
+    }
+};
 
     const getColor = (worship: string) => {
         switch (worship) {
@@ -204,9 +225,41 @@ const CreateHabit = () => {
                         )}
                     </div>
                 </div>
-            </MaxWidthWrapper>
-        </main>
-    );
+            )}
+            <div className="flex justify-center">
+                <button
+                type="submit"
+                className="mt-6 bg-green-700 hover:bg-green-600/90 rounded-md w-48 text-white py-1.5 font-medium text-sm px-4"
+                >
+                Create Habit
+                </button>
+            </div>
+            {error && (
+                <div className="text-center mt-2 text-red-500 font-semibold">
+                <p>{error}</p>
+                </div>
+            )}
+            </div>
+        </form>
+        </div>
+        <div>
+            {worship && (
+                <HabitStats
+                title={worship}
+                emoji="📖"
+                total={(parseFloat(dailyQuantity as string) * 365).toString()}
+                goodDeeds={reward}
+                page={`${dailyQuantity} ${unit}`}
+                perDay="7 days"
+                unit={unit}
+                color={getColor(worship)}
+                />
+            )}
+        </div>
+        </div>
+    </MaxWidthWrapper>
+    </main>
+);
 };
 
 export default CreateHabit;

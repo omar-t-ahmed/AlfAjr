@@ -30,7 +30,6 @@ enum Worship {
   Quran
   Salawat
   Nafl
-  Masjid
   Thikr
 }
 
@@ -38,5 +37,4 @@ enum Unit {
   Verse
   Unit
   Minute
-  Visit
 }
