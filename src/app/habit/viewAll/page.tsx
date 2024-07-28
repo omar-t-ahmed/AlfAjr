@@ -66,7 +66,7 @@ const AllHabits = () => {
                 <div className="flex flex-col items-center">
                     <div className="font-bold text-3xl my-6 text-red-500 text-center">
                         THIS PAGE HAS LIMITED FUNCTIONALITY. IT IS CURRENTLY
-                        UNDER DEVELOPMENT.
+                        UNDER DEVELOPMENT. Full functionality will be available shortly!
                     </div>
                     <div className="font-bold text-4xl my-6 text-green-600">
                         Your Habits
