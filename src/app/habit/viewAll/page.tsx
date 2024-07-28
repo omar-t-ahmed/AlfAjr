@@ -64,9 +64,23 @@ const AllHabits = () => {
         <main className="bg-zinc-900 h-screen text-white">
             <MaxWidthWrapper className="py-4">
                 <div className="flex flex-col items-center">
+                <div className="font-bold text-3xl my-6 text-red-500 text-center">
+                        THIS PAGE HAS LIMITED FUNCTIONALITY. IT IS CURRENTLY UNDER DEVELOPMENT.
+                    </div>
                     <div className="font-bold text-4xl my-6 text-green-600">
                         Your Habits
                     </div>
+                    <Link
+                                href="/habit/create"
+                                className={buttonVariants({
+                                    size: "sm",
+                                    className:
+                                        "bg-green-600 mt-5 sm:flex items-center gap-1 mb-6",
+                                })}
+                            >
+                                {" "}
+                                Create New Habit
+                            </Link>
                     {userWithHabits ? (
                         <div>
                             <div className="text-2xl mb-4">
