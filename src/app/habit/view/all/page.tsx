@@ -60,13 +60,13 @@ const AllHabits = () => {
     const getColor = (worship: string) => {
         switch (worship) {
             case "Quran":
-                return "bg-gradient-to-r from-emerald-500 to-teal-600";
+                return "bg-gradient-to-r from-emerald-700 to-teal-800";
             case "Salawat":
-                return "bg-gradient-to-r from-orange-600 to-amber-300";
+                return "bg-gradient-to-r from-orange-800 to-amber-500";
             case "Nafl":
-                return "bg-gradient-to-r from-red-900 to-blue-500";
+                return "bg-gradient-to-r from-red-900 to-blue-900";
             case "Thikr":
-                return "bg-gradient-to-r from-blue-500 to-blue-600";
+                return "bg-gradient-to-r from-blue-700 to-blue-900";
             case "Masjid":
                 return "bg-gradient-to-r from-red-500 to-red-700";
             default:
@@ -79,7 +79,7 @@ const AllHabits = () => {
     };
 
     return (
-        <main className="bg-zinc-900 h-screen text-white">
+        <main className="bg-zinc-900 text-white">
             <MaxWidthWrapper className="py-4">
                 <div className="flex flex-col items-center">
                     <div className="font-bold text-lg my-6 text-green-500 text-center w-[500px]">
@@ -99,12 +99,12 @@ const AllHabits = () => {
                         <Plus className="ml-1.5 h-5 w-5" />
                     </Link>
                     {userWithHabits ? (
-                        <section>
+                        <div className="w-full px-6 sm:px-2">
                                 <div className="text-3xl mb-4 text-bold mt-8">
                                     <span className="hidden md:flex">Habits for {userWithHabits.username}</span>
                                     {userWithHabits.username  === "tsheikh2001"? <div className="text-bold text-blue-500">Tablighi Edition</div> :""}
                                 </div>
-                                <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
+                                <div className="grid grid-cols-1 gap-y-6 ">
                                     {userWithHabits.habits.map((habit) => (
                                         <Card
                                             key={habit.id}
@@ -126,7 +126,7 @@ const AllHabits = () => {
                                         </Card>
                                     ))}
                                 </div>
-                        </section>
+                        </div>
                     ) : (
                         <>
                             <div>Loading...</div>
