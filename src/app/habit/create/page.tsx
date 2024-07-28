@@ -139,8 +139,8 @@ const CreateHabit = () => {
             <MaxWidthWrapper className="py-4">
                 <div className="flex align-middle justify-around">
                     <div className="flex flex-col items-center">
-                    <div className="font-bold text-lg my-6 text-red-500 text-center w-[500px]">
-                        THIS PAGE HAS LIMITED FUNCTIONALITY. IT IS CURRENTLY UNDER DEVELOPMENT. Full functionality will be available shortly!
+                    <div className="font-bold text-lg my-6 text-green-500 text-center w-[500px]">
+                        More Features Coming Very Soon!
                     </div>
                         <div className="font-bold text-3xl my-8">Create Habit</div>
                         <form onSubmit={handleSubmit}>

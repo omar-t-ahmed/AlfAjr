@@ -1,6 +1,7 @@
 "use client";
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 import { signIn, googleSignUp } from "@/lib/auth";
+import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -21,6 +22,35 @@ const Login = () => {
     const handleGoogleSignIn = async () => {
         try {
             const user = await googleSignUp();
+            try {
+                // Check if the user exists in the database
+                const response = await axios.get(
+                    `/api/users?email=${user.email}`
+                );
+                const dbUser = response.data;
+                if (dbUser.error) {
+                    // User does not exist, create the user
+                    await axios.post("/api/users", {
+                        email: user.email,
+                        totalReward: 0,
+                        friends: [],
+                    });
+                } else {
+                    router.push("/")
+                }
+            } catch (error: any) {
+                // If error occurs in fetching user, create the user
+                if (error.response && error.response.status === 404) {
+                    await axios.post("/api/users", {
+                        email: user.email,
+                        totalReward: 0,
+                        friends: [],
+                    });
+                } else {
+                    throw error;
+                }
+            }
+
             router.push("/");
         } catch (error) {
             setError("Failed to sign in");
