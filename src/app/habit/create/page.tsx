@@ -175,7 +175,7 @@ const CreateHabit = () => {
                                     </SelectContent>
                                 </Select>
                                 {worship && (
-                                    <div className="flex items-center">
+                                    <div className="flex flex-col justify-content items-center">
                                         <input
                                             type="number"
                                             id="dailyQuantity"
@@ -187,7 +187,7 @@ const CreateHabit = () => {
                                             className="w-64 mb-1 py-1 px-2 rounded-md ring-1 ring-zinc-800 bg-zinc-900"
                                             disabled={!worship}
                                         />
-                                        <span className="ml-2">
+                                        <span className="mt-2">
                                             {unit}
                                             {dailyQuantity !== 1 ? "s" : ""}
                                         </span>
@@ -196,9 +196,9 @@ const CreateHabit = () => {
                                 <div className="flex justify-center">
                                     <button
                                         type="submit"
-                                        className="mt-6 bg-green-700 hover:bg-green-600/90 rounded-md w-48 text-white py-1.5 font-medium text-sm px-4 h-12 "
+                                        className="mt-6 bg-green-700 hover:bg-green-600/90 rounded-md w-48 text-white py-1.5 font-medium px-4 h-12 text-bold text-md"
                                     >
-                                        Create Habit
+                                        Create Habit 
                                     </button>
                                 </div>
                                 {error && (
