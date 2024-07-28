@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { db } from '@/app/db'; // Ensure this path is correct
+import { db } from '@/db'; // Ensure this path is correct
 
 export async function GET(req: NextRequest) {
   return await findUser(req);

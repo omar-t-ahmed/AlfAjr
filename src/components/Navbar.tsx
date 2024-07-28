@@ -75,7 +75,7 @@ const Navbar = () => {
                                     </Link>
                                     <div className="h-8 w-px bg-zinc-200 hidden sm:block" />
                                     <Link
-                                        href="/habit/viewAll"
+                                        href="/habit/view/all"
                                         className={buttonVariants({
                                             size: "sm",
                                             className:

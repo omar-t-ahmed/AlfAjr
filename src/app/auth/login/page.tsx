@@ -14,7 +14,7 @@ const Login = () => {
     const handleSignIn = async () => {
         try {
             await signIn(email, password);
-            router.push("/");
+            router.push("/habit/view/all");
         } catch (error) {
             setError("Failed to sign in");
         }
@@ -36,7 +36,7 @@ const Login = () => {
                         friends: [],
                     });
                 } else {
-                    router.push("/")
+                    router.push("/habit/view/all")
                 }
             } catch (error: any) {
                 // If error occurs in fetching user, create the user
