@@ -6,6 +6,8 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Plus } from "lucide-react";
 
 interface Habit {
     id: number;
@@ -23,9 +25,7 @@ interface UserWithHabits {
 }
 
 const AllHabits = () => {
-    const [userWithHabits, setUserWithHabits] = useState<UserWithHabits | null>(
-        null
-    );
+    const [userWithHabits, setUserWithHabits] = useState<UserWithHabits | null>(null);
     const { user } = useAuth();
     const router = useRouter();
 
@@ -40,15 +40,12 @@ const AllHabits = () => {
                     });
 
                     const userId = userResponse.data.id;
-                    const userWithHabitsResponse = await axios.get(
-                        `/api/users`,
-                        {
-                            params: {
-                                id: userId,
-                                includeHabits: true,
-                            },
-                        }
-                    );
+                    const userWithHabitsResponse = await axios.get(`/api/users`, {
+                        params: {
+                            id: userId,
+                            includeHabits: true,
+                        },
+                    });
 
                     setUserWithHabits(userWithHabitsResponse.data);
                 } catch (error) {
@@ -60,13 +57,33 @@ const AllHabits = () => {
         fetchUserWithHabits();
     }, [user]);
 
+    const getColor = (worship: string) => {
+        switch (worship) {
+            case "Quran":
+                return "bg-gradient-to-r from-emerald-500 to-teal-600";
+            case "Salawat":
+                return "bg-gradient-to-r from-orange-600 to-amber-300";
+            case "Nafl":
+                return "bg-gradient-to-r from-red-900 to-blue-500";
+            case "THIKR":
+                return "bg-gradient-to-r from-blue-500 to-blue-600";
+            case "Masjid":
+                return "bg-gradient-to-r from-red-500 to-red-700";
+            default:
+                return "bg-gradient-to-r from-zinc-500 to-zinc-600";
+        }
+    };
+
+    const handleCardClick = (id: number) => {
+        router.push(`/habit/view/${id}`);
+    };
+
     return (
         <main className="bg-zinc-900 h-screen text-white">
             <MaxWidthWrapper className="py-4">
                 <div className="flex flex-col items-center">
-                    <div className="font-bold text-3xl my-6 text-red-500 text-center">
-                        THIS PAGE HAS LIMITED FUNCTIONALITY. IT IS CURRENTLY
-                        UNDER DEVELOPMENT. Full functionality will be available shortly!
+                    <div className="font-bold text-lg my-6 text-green-500 text-center w-[500px]">
+                        More Features Coming Very Soon!
                     </div>
                     <div className="font-bold text-4xl my-6 text-green-600">
                         Your Habits
@@ -74,52 +91,43 @@ const AllHabits = () => {
                     <Link
                         href="/habit/create"
                         className={buttonVariants({
-                            size: "sm",
-                            className:
-                                "bg-green-600 mt-5 sm:flex items-center gap-1 mb-6",
+                            size: "lg",
+                            className: "bg-green-600 mt-5 sm:flex items-center gap-1 mb-6",
                         })}
                     >
-                        {" "}
                         Create New Habit
+                        <Plus className="ml-1.5 h-5 w-5" />
                     </Link>
                     {userWithHabits ? (
-                        <div>
-                            <div className="text-2xl mb-4">
-                                Habits for {userWithHabits.username}
-                            </div>
-                            <ul>
-                                {userWithHabits.habits.map((habit) => (
-                                    <li key={habit.id} className="mb-2">
-                                        <div>Worship: {habit.worship}</div>
-                                        <div>
-                                            Daily Quantity:{" "}
-                                            {habit.dailyQuantity} {habit.unit}
-                                            {habit.dailyQuantity > 1 ? "s" : ""}
-                                        </div>
-                                        {(habit.worship === "Quran" ||
-                                            habit.worship === "Salawat") && (
-                                            <div>Reward: {habit.reward}</div>
-                                        )}
-                                    </li>
-                                ))}
-                            </ul>
-                            <div className="text-zinc-300 mt-12">
-                                <p>
-                                    These Rewards are caluclated according to
-                                    narrations recorded in{" "}
-                                    <span className="font-semibold">
-                                        Tirmidhi and The Musnad of Imam Ahmad
-                                    </span>
-                                    . Estimated rewards is a fun way of
-                                    estimating your progress, but it is not a
-                                    serious count. Allah(SWT) alone can accept,
-                                    reject, or multiply your deeds as He wills,
-                                    so make sure you have the right intentions
-                                    and ask Allah(SWT) for the best of His
-                                    reward.
-                                </p>
-                            </div>
-                        </div>
+                        <section>
+                            <MaxWidthWrapper>
+                                <div className="text-2xl mb-4">
+                                    Habits for {userWithHabits.username}
+                                </div>
+                                <div className="grid grid-cols-2 sm:grid-cols-3 gap-6">
+                                    {userWithHabits.habits.map((habit) => (
+                                        <Card
+                                            key={habit.id}
+                                            className={`text-white ${getColor(habit.worship)} transform transition-transform duration-300 hover:scale-105 cursor-pointer ring-4 ring-black`}
+                                            onClick={() => handleCardClick(habit.id)}
+                                        >
+                                            <CardHeader>
+                                                <CardTitle className="text-xl text-center">{habit.worship}</CardTitle>
+                                            </CardHeader>
+                                            <CardContent>
+                                                <div>
+                                                    Daily Quantity: {habit.dailyQuantity} {habit.unit}
+                                                    {habit.dailyQuantity > 1 ? "s" : ""}
+                                                </div>
+                                                {(habit.worship === "Quran" || habit.worship === "Salawat") && (
+                                                    <div>Daily Reward: {habit.reward}</div>
+                                                )}
+                                            </CardContent>
+                                        </Card>
+                                    ))}
+                                </div>
+                            </MaxWidthWrapper>
+                        </section>
                     ) : (
                         <>
                             <div>Loading...</div>
@@ -127,15 +135,22 @@ const AllHabits = () => {
                                 href="/auth/register"
                                 className={buttonVariants({
                                     size: "sm",
-                                    className:
-                                        "bg-green-600 mt-5 sm:flex items-center gap-1",
+                                    className: "bg-green-600 mt-5 sm:flex items-center gap-1",
                                 })}
                             >
-                                {" "}
                                 Register First!
                             </Link>
                         </>
                     )}
+                    <div className="text-slate-500 mt-12 w-[400px]">
+                        <p>
+                            These Rewards are calculated according to narrations recorded in{" "}
+                            <span className="font-semibold">
+                                Tirmidhi and The Musnad of Imam Ahmad
+                            </span>
+                            . Estimated rewards is a fun way of estimating your progress, but it is not a serious count. Allah(SWT) alone can accept, reject, or multiply your deeds as He wills, so make sure you have the right intentions and ask Allah(SWT) for the best of His reward.
+                        </p>
+                    </div>
                 </div>
             </MaxWidthWrapper>
         </main>

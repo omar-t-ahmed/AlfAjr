@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
@@ -14,6 +14,8 @@ import {
 } from "@/components/ui/select";
 import { useAuth } from "@/lib/useAuth";
 import HabitStats from "@/components/HabitStats/HabitStats";
+import { Plus } from "lucide-react";
+
 
 export type UserNew = {
     uid: string;
@@ -51,12 +53,14 @@ const CreateHabit = () => {
         }
     };
 
-    const handleDailyQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleDailyQuantityChange = (
+        e: React.ChangeEvent<HTMLInputElement>
+    ) => {
         const value = e.target.value;
-        const quantity = value === '' ? '' : parseFloat(value);
+        const quantity = value === "" ? "" : parseFloat(value);
         setDailyQuantity(quantity);
 
-        if (typeof quantity === 'number' && !isNaN(quantity)) {
+        if (typeof quantity === "number" && !isNaN(quantity)) {
             switch (worship) {
                 case "Quran":
                     setReward(quantity * 500);
@@ -85,7 +89,9 @@ const CreateHabit = () => {
 
         try {
             // Fetch the user details to get the user ID
-            const userResponse = await axios.get(`/api/users?email=${newUser?.email}`);
+            const userResponse = await axios.get(
+                `/api/users?email=${newUser?.email}`
+            );
             const fetchedUser = userResponse.data;
             if (!fetchedUser || fetchedUser.error) {
                 setError("User not found");
@@ -139,10 +145,12 @@ const CreateHabit = () => {
             <MaxWidthWrapper className="py-4">
                 <div className="flex align-middle justify-around">
                     <div className="flex flex-col items-center">
-                    <div className="font-bold text-lg my-6 text-green-500 text-center w-[500px]">
-                        More Features Coming Very Soon!
-                    </div>
-                        <div className="font-bold text-3xl my-8">Create Habit</div>
+                        <div className="font-bold text-lg my-6 text-green-500 text-center w-[500px]">
+                            More Features Coming Very Soon!
+                        </div>
+                        <div className="font-bold text-3xl my-8">
+                            Create Habit
+                        </div>
                         <form onSubmit={handleSubmit}>
                             <div className="flex flex-col gap-1 mx-auto">
                                 <Select onValueChange={handleWorshipChange}>
@@ -152,10 +160,18 @@ const CreateHabit = () => {
                                     <SelectContent>
                                         <SelectGroup>
                                             <SelectLabel>Worship</SelectLabel>
-                                            <SelectItem value="Quran">Quran</SelectItem>
-                                            <SelectItem value="Salawat">Salawat</SelectItem>
-                                            <SelectItem value="Nafl">Nafl</SelectItem>
-                                            <SelectItem value="THIKR">Thikr</SelectItem>
+                                            <SelectItem value="Quran">
+                                                Quran
+                                            </SelectItem>
+                                            <SelectItem value="Salawat">
+                                                Salawat
+                                            </SelectItem>
+                                            <SelectItem value="Nafl">
+                                                Nafl
+                                            </SelectItem>
+                                            <SelectItem value="THIKR">
+                                                Thikr
+                                            </SelectItem>
                                         </SelectGroup>
                                     </SelectContent>
                                 </Select>
@@ -199,7 +215,9 @@ const CreateHabit = () => {
                             <HabitStats
                                 title={worship}
                                 emoji="📖"
-                                total={(parseFloat(dailyQuantity as string) * 365).toString()}
+                                total={(
+                                    parseFloat(dailyQuantity as string) * 365
+                                ).toString()}
                                 goodDeeds={reward}
                                 page={`${dailyQuantity} ${unit}`}
                                 perDay="7 days"
@@ -210,21 +228,19 @@ const CreateHabit = () => {
                     </div>
                 </div>
                 <div className="text-slate-600 mt-12 w-[500px]">
-                                <p>
-                                    These Rewards are calculated according to
-                                    narrations recorded in{" "}
-                                    <span className="font-semibold">
-                                        Tirmidhi and The Musnad of Imam Ahmad
-                                    </span>
-                                    . Estimated rewards is a fun way of
-                                    estimating your progress, but it is not a
-                                    serious count. Allah(SWT) alone can accept,
-                                    reject, or multiply your deeds as He wills,
-                                    so make sure you have the right intentions
-                                    and ask Allah(SWT) for the best of His
-                                    reward.
-                                </p>
-                            </div>
+                    <p>
+                        These Rewards are calculated according to narrations
+                        recorded in{" "}
+                        <span className="font-semibold">
+                            Tirmidhi and The Musnad of Imam Ahmad
+                        </span>
+                        . Estimated rewards is a fun way of estimating your
+                        progress, but it is not a serious count. Allah(SWT)
+                        alone can accept, reject, or multiply your deeds as He
+                        wills, so make sure you have the right intentions and
+                        ask Allah(SWT) for the best of His reward.
+                    </p>
+                </div>
             </MaxWidthWrapper>
         </main>
     );
