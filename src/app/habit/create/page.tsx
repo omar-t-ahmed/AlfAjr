@@ -35,7 +35,7 @@ const handleWorshipChange = (value: string) => {
     setWorship(value);
     setDailyQuantity("");
     setReward(0);
-
+    
     switch (value) {
     case "Quran":
         setUnit("Verse");
@@ -199,8 +199,7 @@ return (
                 title={worship}
                 emoji="📖"
                 total={(parseFloat(dailyQuantity as string) * 365).toString()}
-                goodDeeds={reward.toString()}
-                days={`Do this for 365 days and it will be `}
+                goodDeeds={reward}
                 page={`${dailyQuantity} ${unit}`}
                 perDay="7 days"
                 unit={unit}

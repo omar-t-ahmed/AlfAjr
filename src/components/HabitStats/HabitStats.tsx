@@ -1,12 +1,12 @@
 'use client'
 import React from 'react'
+import MaxWidthWrapper from '../MaxWidthWrapper';
 
 interface HabitStatsProps {
     title: string;
     emoji: string;
     total?: string;
-    goodDeeds?: string;
-    days: string;
+    goodDeeds?: number;
     page: string;
     perDay: string;
     unit: string;
@@ -18,22 +18,22 @@ const HabitStats: React.FC<HabitStatsProps> = ({
     emoji,
     total,
     goodDeeds,
-    days,
     page,
     perDay,
     unit,
     color,
 }) => {
     return (
+        <MaxWidthWrapper>
     <div className={`h-full stat p-4 bg-base-300 rounded-2xl gap-2 ${color} text-white`}>
-        {goodDeeds ? (
+        {title == 'Quran' ||  title == 'Salawat' ? (
             <>
             <div className="stat-value overflow-hidden flex items-end gap-2">
-                <p className="text-3xl">{goodDeeds}</p>
+                <p className="text-3xl">{goodDeeds?.toString()}</p>
                 <p className="text-m">good deeds</p>
             </div>
             <span className="stat-desc whitespace-normal opacity-100 text-gray-200">
-                <span className="value">{days}</span>
+                <span className="value">{`Do this for 365 days and it will be ${(goodDeeds * 365).toString()}`}</span>
             </span>
             </>
         ) : (
@@ -47,11 +47,12 @@ const HabitStats: React.FC<HabitStatsProps> = ({
                 )}
             </div>
             <span className="stat-desc whitespace-normal opacity-100 text-gray-200">
-                <span className="value">{days}</span>
+                <span className="value">{`Do this for 365 days and it will be ${(1 * 365).toString()}`}</span>
             </span>
             </>
         )}
         </div>
+        </MaxWidthWrapper>
     );
 };
 
