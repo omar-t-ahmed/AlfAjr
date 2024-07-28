@@ -37,19 +37,19 @@ const Footer = () => {
                 Personal Website
               </Link> */}
               <Link
-                href="/terms"
+                href="/info/terms"
                 className="text-sm text-zinc-500 hover:text-zinc-100"
               >
                 Terms
               </Link>
               <Link
-                href="/privacy-policy"
+                href="/info/privacy-policy"
                 className="text-sm text-zinc-500 hover:text-zinc-100"
               >
                 Privacy Policy
               </Link>
               <Link
-                href="/cookie-policy"
+                href="/info/cookie-policy"
                 className="text-sm text-zinc-500 hover:text-zinc-100"
               >
                 Cookie Policy
