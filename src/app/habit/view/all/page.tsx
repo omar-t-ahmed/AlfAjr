@@ -99,7 +99,7 @@ const AllHabits = () => {
                         <Plus className="ml-1.5 h-5 w-5" />
                     </Link>
                     {userWithHabits ? (
-                        <div className="w-full">
+                        <div className="w-full px-6 sm:px-2">
                                 <div className="text-3xl mb-4 text-bold mt-8">
                                     <span className="hidden md:flex">Habits for {userWithHabits.username}</span>
                                     {userWithHabits.username  === "tsheikh2001"? <div className="text-bold text-blue-500">Tablighi Edition</div> :""}
