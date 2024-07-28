@@ -42,6 +42,26 @@ const Navbar = () => {
                                         Sign out
                                     </button>
                                     <Link
+                                        href="/social/friends"
+                                        className={buttonVariants({
+                                            size: "sm",
+                                            variant: "ghost",
+                                        })}
+                                    >
+                                        {" "}
+                                        Friends
+                                    </Link>
+                                    <Link
+                                        href="/social/leaderboard"
+                                        className={buttonVariants({
+                                            size: "sm",
+                                            variant: "ghost",
+                                        })}
+                                    >
+                                        {" "}
+                                        Leaderboard
+                                    </Link>
+                                    <Link
                                         href="/habit/create"
                                         className={buttonVariants({
                                             size: "sm",
