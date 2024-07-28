@@ -16,7 +16,6 @@ import { useAuth } from "@/lib/useAuth";
 import HabitStats from "@/components/HabitStats/HabitStats";
 import { Plus } from "lucide-react";
 
-
 export type UserNew = {
     uid: string;
     email: string;
@@ -142,14 +141,14 @@ const CreateHabit = () => {
 
     return (
         <main className="bg-zinc-900 h-screen text-white">
-            <MaxWidthWrapper className="py-4">
-                <div className="flex align-middle justify-around">
-                    <div className="flex flex-col items-center">
-                        <div className="font-bold text-lg my-6 text-green-500 text-center w-[500px]">
+            <MaxWidthWrapper className="py-16">
+                <div className="flex flex-col align-middle justify-around">
+                    <div className="flex flex-col items-center mb-16">
+                        <div className="font-bold text-2xl my-6 text-green-500 text-center w-[500px]">
                             More Features Coming Very Soon!
                         </div>
                         <div className="font-bold text-3xl my-8">
-                            Create Habit
+                            Create Habit 🌙
                         </div>
                         <form onSubmit={handleSubmit}>
                             <div className="flex flex-col gap-1 mx-auto">
@@ -197,7 +196,7 @@ const CreateHabit = () => {
                                 <div className="flex justify-center">
                                     <button
                                         type="submit"
-                                        className="mt-6 bg-green-700 hover:bg-green-600/90 rounded-md w-48 text-white py-1.5 font-medium text-sm px-4"
+                                        className="mt-6 bg-green-700 hover:bg-green-600/90 rounded-md w-48 text-white py-1.5 font-medium text-sm px-4 h-12 "
                                     >
                                         Create Habit
                                     </button>
@@ -210,37 +209,43 @@ const CreateHabit = () => {
                             </div>
                         </form>
                     </div>
-                    <div>
+                    <div className="mx-10">
                         {dailyQuantity && (
-                            <HabitStats
-                                title={worship}
-                                emoji="📖"
-                                total={(
-                                    parseFloat(dailyQuantity as string) * 365
-                                ).toString()}
-                                goodDeeds={reward}
-                                page={`${dailyQuantity} ${unit}`}
-                                perDay="7 days"
-                                unit={unit}
-                                color={getColor(worship)}
-                            />
+                                <HabitStats
+                                    title={worship}
+                                    emoji="📖"
+                                    total={(
+                                        parseFloat(dailyQuantity as string) *
+                                        365
+                                    ).toString()}
+                                    goodDeeds={reward}
+                                    page={`${dailyQuantity} ${unit}`}
+                                    perDay="7 days"
+                                    unit={unit}
+                                    color={getColor(worship)}
+                                />
                         )}
                     </div>
                 </div>
-                <div className="text-slate-600 mt-12 w-[500px]">
-                    <p>
-                        These Rewards are calculated according to narrations
-                        recorded in{" "}
-                        <span className="font-semibold">
-                            Tirmidhi and The Musnad of Imam Ahmad
-                        </span>
-                        . Estimated rewards is a fun way of estimating your
-                        progress, but it is not a serious count. Allah(SWT)
-                        alone can accept, reject, or multiply your deeds as He
-                        wills, so make sure you have the right intentions and
-                        ask Allah(SWT) for the best of His reward.
-                    </p>
-                </div>
+                <MaxWidthWrapper>
+                    <div className="w-full flex flex-col items-center">
+                        <div className="text-slate-600 mt-12 w-[425px] sm:w-[500px] flex">
+                            <p>
+                                These Rewards are calculated according to
+                                narrations recorded in{" "}
+                                <span className="font-semibold">
+                                    Tirmidhi and The Musnad of Imam Ahmad
+                                </span>
+                                . Estimated rewards is a fun way of estimating
+                                your progress, but it is not a serious count.
+                                Allah(SWT) alone can accept, reject, or multiply
+                                your deeds as He wills, so make sure you have
+                                the right intentions and ask Allah(SWT) for the
+                                best of His reward.
+                            </p>
+                        </div>
+                    </div>
+                </MaxWidthWrapper>
             </MaxWidthWrapper>
         </main>
     );
