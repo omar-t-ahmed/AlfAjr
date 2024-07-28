@@ -26,7 +26,7 @@ export default function Home() {
                     })}
                   >
                     {" "}
-                    Create Habit Now
+                    Build Habit Now
                     <ArrowRight className="ml-1.5 h-5 w-5" />
                   </Link>
               </>
@@ -56,7 +56,7 @@ export default function Home() {
               </Link>
             </div>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 lg:w-3/5 mx-auto">
-  <div className="h-full stat p-4 bg-base-300 rounded-2xl gap-2 bg-gradient-to-r from-cyan-500 to-blue-500 text-white">
+  <div className="h-full stat p-4 bg-base-300 rounded-2xl gap-2 bg-gradient-to-r from-emerald-500 to-teal-600 text-white">
     <span className="stat-title font-semibold uppercase whitespace-normal leading-3 text-sm opacity-100 text-gray-100">
       <div className="inline text-lg mr-2">📖</div>Read Quran
     </span>
@@ -69,7 +69,7 @@ export default function Home() {
     </span>
     </div>
   </div>
-  <div className="h-full stat p-4 pb-2 bg-base-300 rounded-2xl gap-2 bg-gradient-to-r from-pink-500 to-yellow-500 text-white">
+  <div className="h-full stat p-4 pb-2 bg-base-300 rounded-2xl gap-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white">
     <span className="stat-title font-semibold uppercase whitespace-normal leading-3 text-sm opacity-100 text-gray-100">
       <div className="inline text-lg mr-2">📿</div>Make Thikr
     </span>
@@ -82,7 +82,7 @@ export default function Home() {
     </span>
     </div>
   </div>
-  <div className="h-full stat p-4 pb-2 bg-base-300 rounded-2xl gap-2 col-span-2 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white">
+  <div className="h-full stat p-4 pb-2 bg-base-300 rounded-2xl gap-2 col-span-2 bg-gradient-to-r from-red-900 to-blue-500 text-white">
     <span className="stat-title font-semibold uppercase whitespace-normal leading-3 text-sm opacity-100 text-gray-100">
       <div className="inline text-lg mr-2">🕌</div>Pray Nafl
     </span>
@@ -95,7 +95,7 @@ export default function Home() {
     </span>
     </div>
   </div>
-  <div className="h-full stat p-4 pb-2 bg-base-300 rounded-2xl gap-2 bg-gradient-to-r from-cyan-500 to-blue-500 text-white">
+  <div className="h-full stat p-4 pb-2 bg-base-300 rounded-2xl gap-2 bg-gradient-to-r from-orange-600 to-amber-300 text-white">
     <span className="stat-title font-semibold uppercase whitespace-normal leading-3 text-sm opacity-100 text-gray-100">
       <div className="inline text-lg mr-2">💚</div>Send Salawat
     </span>
@@ -108,7 +108,7 @@ export default function Home() {
     </span>
     </div>
   </div>
-  <div className="h-full stat p-4 pb-2 bg-base-300 rounded-2xl gap-2 lg:col-span-2 lg:col-start-2 bg-gradient-to-r from-pink-500 to-yellow-500 text-white">
+  <div className="h-full stat p-4 pb-2 bg-base-300 rounded-2xl gap-2 lg:col-span-2 lg:col-start-2 bg-gradient-to-r from-rose-500 to-violet-400 text-white">
     <span className="stat-title font-semibold uppercase whitespace-normal leading-3 text-sm opacity-100 text-gray-100">
       <div className="inline text-lg mr-2">📜</div>Recite Athkar
     </span>
