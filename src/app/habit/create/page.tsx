@@ -106,7 +106,7 @@ const CreateHabit = () => {
                 unit,
                 reward,
             });
-            router.push("/habit/viewAll");
+            router.push("/habit/view/all");
         } catch (error) {
             setError("Failed to create habit");
             console.error("Failed to create habit", error);
