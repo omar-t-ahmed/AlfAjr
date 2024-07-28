@@ -126,7 +126,7 @@ const ShuffleHabits = () => {
                 </div>
             </div>
             <div className="text-center mt-3 flex items-center justify-around">
-            <button onClick={shuffleHabits} className="btn btn-ghost mt-2 p-2 gap-3 bg-gradient-to-r from-slate-700 to-slate-800  rounded-lg flex items-center justify-around hover:bg-gray-500">
+            <button onClick={shuffleHabits} className="btn btn-ghost mt-2 p-2 gap-3 bg-gradient-to-r from-slate-700 to-slate-800  rounded-lg flex items-center justify-around hover:!bg-gray-500">
                 <svg
                 xmlns="http://www.w3.org/2000/svg"
                 xmlnsXlink="http://www.w3.org/1999/xlink"
