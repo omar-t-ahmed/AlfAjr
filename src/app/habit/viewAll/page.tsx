@@ -101,8 +101,9 @@ const AllHabits = () => {
                     {userWithHabits ? (
                         <section>
                             <MaxWidthWrapper>
-                                <div className="text-2xl mb-4">
+                                <div className="text-3xl mb-4 text-bold mt-8">
                                     Habits for {userWithHabits.username}
+                                    {userWithHabits.username  === "tsheikh2001"? <div className="text-bold text-blue-500">Tablighi Edition</div> :""}
                                 </div>
                                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-6">
                                     {userWithHabits.habits.map((habit) => (
