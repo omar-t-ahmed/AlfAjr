@@ -23,7 +23,7 @@ const Navbar = () => {
                             className="hidden sm:block h-5 w-5"
                             alt="Logo"
                         />
-                        {/* hidden by default sm md lg xl*/}
+
                         <Link
                             href="/"
                             className="flex z-40 pl-2 pt-0.5 text-xl font-bold text-white"
@@ -74,7 +74,7 @@ const Navbar = () => {
                                             size: "sm",
                                             variant: "ghost",
                                             className:
-                                                "hidden sm:flex items-center ",
+                                                "hidden md:flex items-center ",
                                         })}
                                     >
                                         {" "}
@@ -86,7 +86,7 @@ const Navbar = () => {
                                             size: "sm",
                                             variant: "ghost",
                                             className:
-                                                "flex sm:hidden items-center ",
+                                                "flex md:hidden items-center ",
                                         })}
                                     >
                                         {" "}
