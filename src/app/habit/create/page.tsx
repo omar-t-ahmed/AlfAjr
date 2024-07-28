@@ -166,7 +166,7 @@ const CreateHabit = () => {
                                             id="dailyQuantity"
                                             value={dailyQuantity}
                                             onChange={handleDailyQuantityChange}
-                                            // placeholder={`Daily Quantity (${unit})`}
+                                            placeholder={`Daily Quantity (${unit})`}
                                             min={1}
                                             step="1"
                                             className="w-64 mb-1 py-1 px-2 rounded-md ring-1 ring-zinc-800 bg-zinc-900"
