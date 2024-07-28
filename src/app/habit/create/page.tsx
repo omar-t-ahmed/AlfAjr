@@ -209,6 +209,22 @@ const CreateHabit = () => {
                         )}
                     </div>
                 </div>
+                <div className="text-zinc-300 mt-12">
+                                <p>
+                                    These Rewards are calculated according to
+                                    narrations recorded in{" "}
+                                    <span className="font-semibold">
+                                        Tirmidhi and The Musnad of Imam Ahmad
+                                    </span>
+                                    . Estimated rewards is a fun way of
+                                    estimating your progress, but it is not a
+                                    serious count. Allah(SWT) alone can accept,
+                                    reject, or multiply your deeds as He wills,
+                                    so make sure you have the right intentions
+                                    and ask Allah(SWT) for the best of His
+                                    reward.
+                                </p>
+                            </div>
             </MaxWidthWrapper>
         </main>
     );
