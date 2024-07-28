@@ -139,6 +139,9 @@ const CreateHabit = () => {
             <MaxWidthWrapper className="py-4">
                 <div className="flex align-middle justify-around">
                     <div className="flex flex-col items-center">
+                    <div className="font-bold text-lg my-6 text-red-500 text-center">
+                        THIS PAGE HAS LIMITED FUNCTIONALITY. IT IS CURRENTLY UNDER DEVELOPMENT. Full functionality will be available shortly!
+                    </div>
                         <div className="font-bold text-3xl my-8">Create Habit</div>
                         <form onSubmit={handleSubmit}>
                             <div className="flex flex-col gap-1 mx-auto">
@@ -192,7 +195,7 @@ const CreateHabit = () => {
                         </form>
                     </div>
                     <div>
-                        {worship && (
+                        {dailyQuantity && (
                             <HabitStats
                                 title={worship}
                                 emoji="📖"
@@ -206,6 +209,22 @@ const CreateHabit = () => {
                         )}
                     </div>
                 </div>
+                <div className="text-zinc-300 mt-12">
+                                <p>
+                                    These Rewards are calculated according to
+                                    narrations recorded in{" "}
+                                    <span className="font-semibold">
+                                        Tirmidhi and The Musnad of Imam Ahmad
+                                    </span>
+                                    . Estimated rewards is a fun way of
+                                    estimating your progress, but it is not a
+                                    serious count. Allah(SWT) alone can accept,
+                                    reject, or multiply your deeds as He wills,
+                                    so make sure you have the right intentions
+                                    and ask Allah(SWT) for the best of His
+                                    reward.
+                                </p>
+                            </div>
             </MaxWidthWrapper>
         </main>
     );
