@@ -37,10 +37,6 @@ const HabitView = ({ params }: { params: { id: string } }) => {
     };
 
     if (!habit) {
-        return <div>Loading...</div>;
-    }
-
-    if (!habit) {
         return (
             <div className="bg-zinc-900 h-screen text-white">
                 <MaxWidthWrapper className="py-16">
