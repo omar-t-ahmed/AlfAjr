@@ -126,14 +126,13 @@ const ShuffleHabits = () => {
                 </div>
             </div>
             <div className="text-center mt-2">
-                <button onClick={shuffleHabits} className="btn btn-ghost gap-3 fill-base-content">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 animate-spin" viewBox="0 0 448 512">
-                    </svg>
-                    Shuffle habits
-                </button>
+            <button onClick={shuffleHabits} className="btn btn-ghost mt-2 p-3 gap-3 bg-slate-400">
+                <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 fill-current animate-spin text-slate-400" viewBox="0 0 448 512">
+                </svg>
+            Shuffle Habits
+            </button>
             </div>
         </div>
-
     );
 }
 
