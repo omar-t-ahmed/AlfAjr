@@ -22,7 +22,7 @@ export type UserNew = {
 
 const CreateHabit = () => {
     const [worship, setWorship] = useState("");
-    const [dailyQuantity, setDailyQuantity] = useState<number | string>(1);
+    const [dailyQuantity, setDailyQuantity] = useState<number | string>("");
     const [unit, setUnit] = useState("");
     const [reward, setReward] = useState(1);
     const [error, setError] = useState<string | null>(null);
@@ -139,6 +139,9 @@ const CreateHabit = () => {
             <MaxWidthWrapper className="py-4">
                 <div className="flex align-middle justify-around">
                     <div className="flex flex-col items-center">
+                    <div className="font-bold text-lg my-6 text-red-500 text-center">
+                        THIS PAGE HAS LIMITED FUNCTIONALITY. IT IS CURRENTLY UNDER DEVELOPMENT.
+                    </div>
                         <div className="font-bold text-3xl my-8">Create Habit</div>
                         <form onSubmit={handleSubmit}>
                             <div className="flex flex-col gap-1 mx-auto">
@@ -192,7 +195,7 @@ const CreateHabit = () => {
                         </form>
                     </div>
                     <div>
-                        {worship && (
+                        {dailyQuantity && (
                             <HabitStats
                                 title={worship}
                                 emoji="📖"
