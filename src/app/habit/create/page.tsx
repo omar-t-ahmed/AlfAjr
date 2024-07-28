@@ -140,7 +140,7 @@ const CreateHabit = () => {
                 <div className="flex align-middle justify-around">
                     <div className="flex flex-col items-center">
                     <div className="font-bold text-lg my-6 text-red-500 text-center">
-                        THIS PAGE HAS LIMITED FUNCTIONALITY. IT IS CURRENTLY UNDER DEVELOPMENT.
+                        THIS PAGE HAS LIMITED FUNCTIONALITY. IT IS CURRENTLY UNDER DEVELOPMENT. Full functionality will be available shortly!
                     </div>
                         <div className="font-bold text-3xl my-8">Create Habit</div>
                         <form onSubmit={handleSubmit}>
