@@ -30,7 +30,7 @@ const HabitStats: React.FC<HabitStatsProps> = ({
                     <>
                         <div className="stat-value overflow-hidden flex items-end gap-2">
                             <p className="text-3xl">{goodDeeds?.toString()}</p>
-                            <p className="text-m">good deeds</p>
+                            {goodDeeds == 1 ? <p className="text-m">good deed a day</p> : <p className="text-m">good deeds a day</p>}
                         </div>
                         <span className="stat-desc whitespace-normal opacity-100 text-gray-200">
                             <span className="value">{`Do this for 365 days and it will be ${(goodDeeds * 365).toString()} good deeds`}</span>
@@ -38,29 +38,29 @@ const HabitStats: React.FC<HabitStatsProps> = ({
                     </>
                 ) : (
                     <>
-                    {title === 'Thikr' ? 
+                    {title === 'THIKR' && goodDeeds ? 
                     <>
                         <div className="stat-value overflow-hidden flex items-end gap-2">
                                 <p className="text-3xl">{goodDeeds}</p>
-                                <p className="text-m">minutes total</p>
+                                {goodDeeds == 1 ? <p className="text-m">minute a day</p> : <p className="text-m">minutes a day</p>}
                         </div>
                                 <span className="stat-desc whitespace-normal opacity-100 text-gray-200">
-                            <span className="value">{`Do this for 365 days and it will be ${(1* 365).toString()}`}</span>
+                            <span className="value">{`Do this for 1 year and it will be ${(goodDeeds * 365).toString()} minutes total`}</span>
                         </span>
                     </>
                     :
                     <>
+                    {goodDeeds &&
+                    <>
                         <div className="stat-value overflow-hidden flex items-end gap-2">
                                 <p className="text-3xl">{goodDeeds}</p>
-                                    {unit === 'Minute' ? (
-                                        <p className="text-m">minutes total</p>
-                                        ) : (
-                                        <p className="text-m">{unit.toLowerCase()} total</p>
-                                )}
-                                </div>
+                                    {goodDeeds == 1 ? <p className="text-m">rakat a day</p> : <p className="text-m">rakats a day</p>}
+                        </div>
                                 <span className="stat-desc whitespace-normal opacity-100 text-gray-200">
-                            <span className="value">{`Do this for 1 year and it will be ${(1* 365).toString()} good deeds`}</span>
+                            <span className="value">{`Do this for 1 year and it will be ${(goodDeeds * 365).toString()} rakat total`}</span>
                         </span>
+                    </>
+                    }
                     </>
                     }
                     </>

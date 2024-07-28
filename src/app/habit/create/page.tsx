@@ -12,7 +12,6 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-
 import { useAuth } from "@/lib/useAuth";
 import HabitStats from "@/components/HabitStats/HabitStats";
 
@@ -23,7 +22,7 @@ export type UserNew = {
 
 const CreateHabit = () => {
     const [worship, setWorship] = useState("");
-    const [dailyQuantity, setDailyQuantity] = useState<number | string>("");
+    const [dailyQuantity, setDailyQuantity] = useState<number | string>(1);
     const [unit, setUnit] = useState("");
     const [reward, setReward] = useState(1);
     const [error, setError] = useState<string | null>(null);
@@ -52,7 +51,7 @@ const CreateHabit = () => {
         }
     };
 
-const handleDailyQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleDailyQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
         const quantity = value === '' ? '' : parseFloat(value);
         setDailyQuantity(quantity);
@@ -75,68 +74,48 @@ const handleDailyQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         } else {
             setReward(1);
         }
- };
+    };
 
-const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!user) {
-    setError("You must login to save the Habit!");
-    return;
-    }
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!user) {
+            setError("You must login to save the Habit!");
+            return;
+        }
 
-    try {
-    // Fetch the user details to get the user ID
-    const userResponse = await axios.get(
-        `/api/users?email=${newUser?.email}`
-    );
-    const user = userResponse.data;
-      
-    if (!user || user.error) {
-        setError("User not found");
-        return;
-    }
+        try {
+            // Fetch the user details to get the user ID
+            const userResponse = await axios.get(`/api/users?email=${newUser?.email}`);
+            const fetchedUser = userResponse.data;
+            if (!fetchedUser || fetchedUser.error) {
+                setError("User not found");
+                return;
+            }
 
-    const userId = user.id;
+            const userId = fetchedUser.id;
 
-    await axios.post("/api/habits", {
-        userId,
-        worship,
-        dailyQuantity,
-        unit,
-        reward,
-    });
-    router.push("/habit/viewAll");
-    } catch (error) {
-    setError("Failed to create habit");
-    console.error("Failed to create habit", error);
-    }
-};
+            await axios.post("/api/habits", {
+                userId,
+                worship,
+                dailyQuantity,
+                unit,
+                reward,
+            });
+            router.push("/habit/viewAll");
+        } catch (error) {
+            setError("Failed to create habit");
+            console.error("Failed to create habit", error);
+        }
+    };
 
-useEffect(() => {
-    if (user) {
-    setNewUser({
-        uid: user.uid,
-        email: user.email ?? "",
-    });
-    }
-}, [user]);
-
-const getColor = (worship: string) => {
-    switch (worship) {
-    case "Quran":
-        return "bg-gradient-to-r from-emerald-500 to-teal-600";
-    case "Salawat":
-        return "bg-gradient-to-r from-orange-600 to-amber-300";
-    case "Nafl":
-        return "bg-gradient-to-r from-red-900 to-blue-500";
-    case "THIKR":
-        return "bg-gradient-to-r from-blue-500 to-blue-600";
-    case "Masjid":
-        return "bg-gradient-to-r from-red-500 to-red-700";
-    default:
-        return "bg-gradient-to-r from-zinc-500 to-zinc-600";
-    }
-};
+    useEffect(() => {
+        if (user) {
+            setNewUser({
+                uid: user.uid,
+                email: user.email ?? "",
+            });
+        }
+    }, [user]);
 
     const getColor = (worship: string) => {
         switch (worship) {
@@ -148,6 +127,8 @@ const getColor = (worship: string) => {
                 return "bg-gradient-to-r from-red-900 to-blue-500";
             case "THIKR":
                 return "bg-gradient-to-r from-blue-500 to-blue-600";
+            case "Masjid":
+                return "bg-gradient-to-r from-red-500 to-red-700";
             default:
                 return "bg-gradient-to-r from-zinc-500 to-zinc-600";
         }
@@ -182,8 +163,8 @@ const getColor = (worship: string) => {
                                             id="dailyQuantity"
                                             value={dailyQuantity}
                                             onChange={handleDailyQuantityChange}
-                                            placeholder={`Daily Quantity (${unit})`}
-                                            min={0}
+                                            // placeholder={`Daily Quantity (${unit})`}
+                                            min={1}
                                             step="1"
                                             className="w-64 mb-1 py-1 px-2 rounded-md ring-1 ring-zinc-800 bg-zinc-900"
                                             disabled={!worship}
@@ -225,41 +206,9 @@ const getColor = (worship: string) => {
                         )}
                     </div>
                 </div>
-            )}
-            <div className="flex justify-center">
-                <button
-                type="submit"
-                className="mt-6 bg-green-700 hover:bg-green-600/90 rounded-md w-48 text-white py-1.5 font-medium text-sm px-4"
-                >
-                Create Habit
-                </button>
-            </div>
-            {error && (
-                <div className="text-center mt-2 text-red-500 font-semibold">
-                <p>{error}</p>
-                </div>
-            )}
-            </div>
-        </form>
-        </div>
-        <div>
-            {worship && (
-                <HabitStats
-                title={worship}
-                emoji="📖"
-                total={(parseFloat(dailyQuantity as string) * 365).toString()}
-                goodDeeds={reward}
-                page={`${dailyQuantity} ${unit}`}
-                perDay="7 days"
-                unit={unit}
-                color={getColor(worship)}
-                />
-            )}
-        </div>
-        </div>
-    </MaxWidthWrapper>
-    </main>
-);
+            </MaxWidthWrapper>
+        </main>
+    );
 };
 
 export default CreateHabit;
