@@ -69,7 +69,7 @@ const HabitView = ({ params }: { params: { id: string } }) => {
     return (
         <main className="bg-zinc-900 h-screen text-white">
             <MaxWidthWrapper className="py-16 flex flex-col items-center">
-                <Card className="text-white bg-gradient-to-r from-emerald-500 to-teal-600 w-[500px] relative">
+                <Card className="text-white bg-gradient-to-r from-emerald-500 to-teal-600 w-[325px] md:w-[500px] relative">
                     <CardHeader>
                         <CardTitle className="text-4xl text-center">
                             {habit.worship}
