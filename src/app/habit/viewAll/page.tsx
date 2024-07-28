@@ -86,7 +86,7 @@ const AllHabits = () => {
                         More Features Coming Very Soon!
                     </div>
                     <div className="font-bold text-4xl my-6 text-green-600">
-                        Your Habits
+                        Your <span className="lg:hidden">Daily </span>Habits
                     </div>
                     <Link
                         href="/habit/create"
@@ -102,10 +102,10 @@ const AllHabits = () => {
                         <section>
                             <MaxWidthWrapper>
                                 <div className="text-3xl mb-4 text-bold mt-8">
-                                    Habits for {userWithHabits.username}
+                                    <span className="hidden md:flex">Habits for {userWithHabits.username}</span>
                                     {userWithHabits.username  === "tsheikh2001"? <div className="text-bold text-blue-500">Tablighi Edition</div> :""}
                                 </div>
-                                <div className="grid grid-cols-2 sm:grid-cols-3 gap-6">
+                                <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
                                     {userWithHabits.habits.map((habit) => (
                                         <Card
                                             key={habit.id}
@@ -117,11 +117,11 @@ const AllHabits = () => {
                                             </CardHeader>
                                             <CardContent>
                                                 <div>
-                                                    Daily Quantity: {habit.dailyQuantity} {habit.unit}
+                                                    <span className="hidden lg:inline">Daily </span>Quantity: {habit.dailyQuantity} {habit.unit}
                                                     {habit.dailyQuantity > 1 ? "s" : ""}
                                                 </div>
                                                 {(habit.worship === "Quran" || habit.worship === "Salawat") && (
-                                                    <div>Daily Reward: {habit.reward}</div>
+                                                    <div><span className="hidden lg:inline">Daily </span>Reward: {habit.reward}</div>
                                                 )}
                                             </CardContent>
                                         </Card>
