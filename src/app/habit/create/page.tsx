@@ -102,7 +102,7 @@ const handleSubmit = async (e: React.FormEvent) => {
         unit,
         reward,
     });
-    router.push("/");
+    router.push("/habit/viewAll");
     } catch (error) {
     setError("Failed to create habit");
     console.error("Failed to create habit", error);

@@ -22,27 +22,33 @@ async function findUser(req: NextRequest) {
   const id = searchParams.get('id');
   const username = searchParams.get('username');
   const email = searchParams.get('email');
+  const includeHabits = searchParams.get('includeHabits') === 'true';
 
   try {
+    let user;
+
     if (id) {
-      const user = await db.user.findUnique({
+      user = await db.user.findUnique({
         where: { id: Number(id) },
+        include: includeHabits ? { habits: true } : undefined,
       });
-      return user ? NextResponse.json(user) : NextResponse.json({ error: 'User not found' }, { status: 404 });
     } else if (username) {
-      const user = await db.user.findUnique({
+      user = await db.user.findUnique({
         where: { username: username },
+        include: includeHabits ? { habits: true } : undefined,
       });
-      return user ? NextResponse.json(user) : NextResponse.json({ error: 'User not found' }, { status: 404 });
     } else if (email) {
-      const user = await db.user.findUnique({
+      user = await db.user.findUnique({
         where: { email: email },
+        include: includeHabits ? { habits: true } : undefined,
       });
-      return user ? NextResponse.json(user) : NextResponse.json({ error: 'User not found' }, { status: 404 });
-    } else {
-      const users = await db.user.findMany();
-      return NextResponse.json(users);
     }
+
+    if (!user) {
+      return NextResponse.json({ error: 'User not found' }, { status: 404 });
+    }
+
+    return NextResponse.json(user);
   } catch (error) {
     console.error('Failed to fetch users:', error);
     return NextResponse.json({ error: 'Failed to fetch users' }, { status: 500 });
