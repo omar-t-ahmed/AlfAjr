@@ -46,7 +46,7 @@ const HabitStats: React.FC<HabitStatsProps> = ({
                     </>
                 ) : (
                     <>
-                        {title === "THIKR" && goodDeeds ? (
+                        {title === "Thikr" && goodDeeds ? (
                             <>
                                 <div className="stat-value overflow-hidden flex items-end gap-2">
                                     <p className="text-3xl">{goodDeeds}</p>

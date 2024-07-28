@@ -65,7 +65,7 @@ const AllHabits = () => {
                 return "bg-gradient-to-r from-orange-600 to-amber-300";
             case "Nafl":
                 return "bg-gradient-to-r from-red-900 to-blue-500";
-            case "THIKR":
+            case "Thikr":
                 return "bg-gradient-to-r from-blue-500 to-blue-600";
             case "Masjid":
                 return "bg-gradient-to-r from-red-500 to-red-700";
