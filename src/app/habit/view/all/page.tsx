@@ -51,7 +51,6 @@ const AllHabits = () => {
                             },
                         }
                     );
-
                     setUserWithHabits(userWithHabitsResponse.data);
                 } catch (error) {
                     console.error("Failed to fetch user or habits:", error);
@@ -63,20 +62,21 @@ const AllHabits = () => {
     }, [user]);
 
     const getColor = (worship: string) => {
-        switch (worship) {
-            case "Quran":
-                return "bg-gradient-to-r from-emerald-700 to-teal-800";
-            case "Salawat":
-                return "bg-gradient-to-r from-orange-800 to-amber-500";
-            case "Nafl":
-                return "bg-gradient-to-r from-red-900 to-blue-900";
-            case "Thikr":
-                return "bg-gradient-to-r from-blue-700 to-blue-900";
-            case "Masjid":
-                return "bg-gradient-to-r from-red-500 to-red-700";
-            default:
-                return "bg-gradient-to-r from-zinc-500 to-zinc-600";
-        }
+        // switch (worship) {
+        //     case "Quran":
+        //         return "bg-gradient-to-r from-emerald-700 to-teal-800";
+        //     case "Salawat":
+        //         return "bg-gradient-to-r from-orange-800 to-amber-500";
+        //     case "Nafl":
+        //         return "bg-gradient-to-r from-red-900 to-blue-900";
+        //     case "Thikr":
+        //         return "bg-gradient-to-r from-blue-700 to-blue-900";
+        //     case "Masjid":
+        //         return "bg-gradient-to-r from-red-500 to-red-700";
+        //     default:
+        //         return "bg-gradient-to-r from-zinc-500 to-zinc-600";
+        // }
+        return "bg-emerald-900"
     };
 
     const handleCardClick = (id: number) => {
@@ -110,7 +110,7 @@ const AllHabits = () => {
                                 <span className="hidden md:flex">
                                     Habits for {userWithHabits.username}
                                 </span>
-                                {userWithHabits.username === "tsheikh2001" ? (
+                                {userWithHabits.username === "tsheikh2001"? (
                                     <div className="text-bold text-blue-500">
                                         Tablighi Edition
                                     </div>
@@ -177,20 +177,26 @@ const AllHabits = () => {
                             </div>
                         </>
                     )}
-                    <div className="text-slate-500 mt-12 w-[400px]">
-                        <p>
-                            These Rewards are calculated according to narrations
-                            recorded in{" "}
-                            <span className="font-semibold">
-                                Tirmidhi and The Musnad of Imam Ahmad
-                            </span>
-                            . Estimated rewards is a fun way of estimating your
-                            progress, but it is not a serious count. Allah(SWT)
-                            alone can accept, reject, or multiply your deeds as
-                            He wills, so make sure you have the right intentions
-                            and ask Allah(SWT) for the best of His reward.
-                        </p>
-                    </div>
+                    <Card className="mt-4 bg-grey-900">
+                        <CardContent className="-mt-8">
+                            <div className="text-slate-500 mt-12 w-[400px]">
+                                <p>
+                                    These Rewards are calculated according to
+                                    narrations recorded in{" "}
+                                    <span className="font-semibold">
+                                        Tirmidhi and The Musnad of Imam Ahmad
+                                    </span>
+                                    . Estimated rewards is a fun way of
+                                    estimating your progress, but it is not a
+                                    serious count. Allah(SWT) alone can accept,
+                                    reject, or multiply your deeds as He wills,
+                                    so make sure you have the right intentions
+                                    and ask Allah(SWT) for the best of His
+                                    reward.
+                                </p>
+                            </div>
+                        </CardContent>
+                    </Card>
                 </div>
             </MaxWidthWrapper>
         </main>
