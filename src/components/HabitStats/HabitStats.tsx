@@ -5,8 +5,8 @@ import MaxWidthWrapper from "../MaxWidthWrapper";
 interface HabitStatsProps {
     title: string;
     emoji: string;
-    total?: string;
-    goodDeeds?: number;
+    total: string;
+    goodDeeds: number;
     page: string;
     perDay: string;
     unit: string;
