@@ -9,7 +9,15 @@ import { useAuth } from "@/lib/useAuth";
 import Image from "next/image";
 import logo from "../../public/alfajr-logo.png";
 import { ArrowRight } from "lucide-react";
-import HamburgerMenu from "@/components/ui/hamburgerMenu";
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import menuIcon from "../../public/icons8-hamburger-menu-50.png";
 
 const Navbar = () => {
     const { user } = useAuth();
@@ -24,7 +32,6 @@ const Navbar = () => {
                             className="hidden sm:block h-5 w-5"
                             alt="Logo"
                         />
-                        {/* hidden by default sm md lg xl*/}
                         <Link
                             href="/"
                             className="flex z-40 pl-2 pt-0.5 text-xl font-bold text-white"
@@ -32,6 +39,18 @@ const Navbar = () => {
                             ALF<span className="text-green-600">AJR</span>
                         </Link>
                     </div>
+                    <DropdownMenu >
+                            <DropdownMenuTrigger className="flex mt-3" asChild>
+                                <button className="absolute top-2 right-6 text-2xl">
+                                    <Image className="w-6 h-6" src={menuIcon}  alt='menu icon'></Image>
+                                </button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end" sideOffset={5}>
+                                <DropdownMenuItem>
+                                    Delete
+                                </DropdownMenuItem>
+                            </DropdownMenuContent>
+                    </DropdownMenu>
                     <div className="h-full flex items-center space-x-4">
                         <>
                             {/* ternary */}
