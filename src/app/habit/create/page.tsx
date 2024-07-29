@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/select";
 import { useAuth } from "@/lib/useAuth";
 import HabitStats from "@/components/HabitStats/HabitStats";
+import { Plus } from "lucide-react";
 
 export type UserNew = {
     uid: string;
@@ -43,7 +44,7 @@ const CreateHabit = () => {
             case "Nafl":
                 setUnit("Unit");
                 break;
-            case "THIKR":
+            case "Thikr":
                 setUnit("Minute");
                 break;
             default:
@@ -51,12 +52,14 @@ const CreateHabit = () => {
         }
     };
 
-    const handleDailyQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleDailyQuantityChange = (
+        e: React.ChangeEvent<HTMLInputElement>
+    ) => {
         const value = e.target.value;
-        const quantity = value === '' ? '' : parseFloat(value);
+        const quantity = value === "" ? "" : parseFloat(value);
         setDailyQuantity(quantity);
 
-        if (typeof quantity === 'number' && !isNaN(quantity)) {
+        if (typeof quantity === "number" && !isNaN(quantity)) {
             switch (worship) {
                 case "Quran":
                     setReward(quantity * 500);
@@ -65,7 +68,7 @@ const CreateHabit = () => {
                     setReward(quantity * 10);
                     break;
                 case "Nafl":
-                case "THIKR":
+                case "Thikr":
                     setReward(quantity * 1);
                     break;
                 default:
@@ -85,7 +88,9 @@ const CreateHabit = () => {
 
         try {
             // Fetch the user details to get the user ID
-            const userResponse = await axios.get(`/api/users?email=${newUser?.email}`);
+            const userResponse = await axios.get(
+                `/api/users?email=${newUser?.email}`
+            );
             const fetchedUser = userResponse.data;
             if (!fetchedUser || fetchedUser.error) {
                 setError("User not found");
@@ -101,7 +106,7 @@ const CreateHabit = () => {
                 unit,
                 reward,
             });
-            router.push("/habit/viewAll");
+            router.push("/habit/view/all");
         } catch (error) {
             setError("Failed to create habit");
             console.error("Failed to create habit", error);
@@ -125,7 +130,7 @@ const CreateHabit = () => {
                 return "bg-gradient-to-r from-orange-600 to-amber-300";
             case "Nafl":
                 return "bg-gradient-to-r from-red-900 to-blue-500";
-            case "THIKR":
+            case "Thikr":
                 return "bg-gradient-to-r from-blue-500 to-blue-600";
             case "Masjid":
                 return "bg-gradient-to-r from-red-500 to-red-700";
@@ -136,13 +141,15 @@ const CreateHabit = () => {
 
     return (
         <main className="bg-zinc-900 h-screen text-white">
-            <MaxWidthWrapper className="py-4">
-                <div className="flex align-middle justify-around">
-                    <div className="flex flex-col items-center">
-                    <div className="font-bold text-lg my-6 text-red-500 text-center w-[500px]">
-                        THIS PAGE HAS LIMITED FUNCTIONALITY. IT IS CURRENTLY UNDER DEVELOPMENT. Full functionality will be available shortly!
-                    </div>
-                        <div className="font-bold text-3xl my-8">Create Habit</div>
+            <MaxWidthWrapper className="py-16">
+                <div className="flex flex-col align-middle justify-around">
+                    <div className="flex flex-col items-center mb-16">
+                        <div className="font-bold text-2xl my-6 text-green-500 text-center w-[500px]">
+                            More Features Coming Very Soon!
+                        </div>
+                        <div className="font-bold text-3xl my-8">
+                            Create Habit 🌙
+                        </div>
                         <form onSubmit={handleSubmit}>
                             <div className="flex flex-col gap-1 mx-auto">
                                 <Select onValueChange={handleWorshipChange}>
@@ -152,15 +159,23 @@ const CreateHabit = () => {
                                     <SelectContent>
                                         <SelectGroup>
                                             <SelectLabel>Worship</SelectLabel>
-                                            <SelectItem value="Quran">Quran</SelectItem>
-                                            <SelectItem value="Salawat">Salawat</SelectItem>
-                                            <SelectItem value="Nafl">Nafl</SelectItem>
-                                            <SelectItem value="THIKR">Thikr</SelectItem>
+                                            <SelectItem value="Quran">
+                                                Quran
+                                            </SelectItem>
+                                            <SelectItem value="Salawat">
+                                                Salawat
+                                            </SelectItem>
+                                            <SelectItem value="Nafl">
+                                                Nafl
+                                            </SelectItem>
+                                            <SelectItem value="Thikr">
+                                                Thikr
+                                            </SelectItem>
                                         </SelectGroup>
                                     </SelectContent>
                                 </Select>
                                 {worship && (
-                                    <div className="flex items-center">
+                                    <div className="flex flex-col justify-content items-center">
                                         <input
                                             type="number"
                                             id="dailyQuantity"
@@ -172,7 +187,7 @@ const CreateHabit = () => {
                                             className="w-64 mb-1 py-1 px-2 rounded-md ring-1 ring-zinc-800 bg-zinc-900"
                                             disabled={!worship}
                                         />
-                                        <span className="ml-2">
+                                        <span className="mt-2">
                                             {unit}
                                             {dailyQuantity !== 1 ? "s" : ""}
                                         </span>
@@ -181,7 +196,7 @@ const CreateHabit = () => {
                                 <div className="flex justify-center">
                                     <button
                                         type="submit"
-                                        className="mt-6 bg-green-700 hover:bg-green-600/90 rounded-md w-48 text-white py-1.5 font-medium text-sm px-4"
+                                        className="mt-6 bg-green-700 hover:bg-green-600/90 rounded-md w-48 text-white py-1.5 font-medium px-4 h-12 text-bold text-md"
                                     >
                                         Create Habit
                                     </button>
@@ -194,12 +209,14 @@ const CreateHabit = () => {
                             </div>
                         </form>
                     </div>
-                    <div>
+                    <div className="mx-10">
                         {dailyQuantity && (
                             <HabitStats
                                 title={worship}
                                 emoji="📖"
-                                total={(parseFloat(dailyQuantity as string) * 365).toString()}
+                                total={(
+                                    parseFloat(dailyQuantity as string) * 365
+                                ).toString()}
                                 goodDeeds={reward}
                                 page={`${dailyQuantity} ${unit}`}
                                 perDay="7 days"
@@ -209,22 +226,23 @@ const CreateHabit = () => {
                         )}
                     </div>
                 </div>
-                <div className="text-slate-600 mt-12 w-[500px]">
-                                <p>
-                                    These Rewards are calculated according to
-                                    narrations recorded in{" "}
-                                    <span className="font-semibold">
-                                        Tirmidhi and The Musnad of Imam Ahmad
-                                    </span>
-                                    . Estimated rewards is a fun way of
-                                    estimating your progress, but it is not a
-                                    serious count. Allah(SWT) alone can accept,
-                                    reject, or multiply your deeds as He wills,
-                                    so make sure you have the right intentions
-                                    and ask Allah(SWT) for the best of His
-                                    reward.
-                                </p>
-                            </div>
+
+                <div className="w-full flex flex-col items-center">
+                    <div className="text-slate-600 mt-12 w-[425px] sm:w-[500px] flex">
+                        <p>
+                            These Rewards are calculated according to narrations
+                            recorded in{" "}
+                            <span className="font-semibold">
+                                Tirmidhi and The Musnad of Imam Ahmad
+                            </span>
+                            . Estimated rewards is a fun way of estimating your
+                            progress, but it is not a serious count. Allah(SWT)
+                            alone can accept, reject, or multiply your deeds as
+                            He wills, so make sure you have the right intentions
+                            and ask Allah(SWT) for the best of His reward.
+                        </p>
+                    </div>
+                </div>
             </MaxWidthWrapper>
         </main>
     );

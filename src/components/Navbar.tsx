@@ -18,7 +18,12 @@ const Navbar = () => {
                 {/* Title */}
                 <div className="flex h-14 items-center justify-between border-b border-zinc-900">
                     <div className="flex justify-center items-center">
-                        <Image src={logo} className="h-5 w-5" alt="Logo" />
+                        <Image
+                            src={logo}
+                            className="hidden sm:block h-5 w-5"
+                            alt="Logo"
+                        />
+
                         <Link
                             href="/"
                             className="flex z-40 pl-2 pt-0.5 text-xl font-bold text-white"
@@ -42,22 +47,58 @@ const Navbar = () => {
                                         Sign out
                                     </button>
                                     <Link
-                                        href="/habit/create"
+                                        href="/social/friends"
+                                        className={buttonVariants({
+                                            size: "sm",
+                                            variant: "ghost",
+                                            className:
+                                                " hidden sm:flex items-center ",
+                                        })}
+                                    >
+                                        {" "}
+                                        Friends
+                                    </Link>
+                                    <Link
+                                        href="/social/leaderboard"
                                         className={buttonVariants({
                                             size: "sm",
                                             variant: "ghost",
                                         })}
                                     >
                                         {" "}
+                                        Leaderboard
+                                    </Link>
+                                    <Link
+                                        href="/habit/create"
+                                        className={buttonVariants({
+                                            size: "sm",
+                                            variant: "ghost",
+                                            className:
+                                                "hidden md:flex items-center ",
+                                        })}
+                                    >
+                                        {" "}
                                         Create Habit
+                                    </Link>
+                                    <Link
+                                        href="/habit/view/all"
+                                        className={buttonVariants({
+                                            size: "sm",
+                                            variant: "ghost",
+                                            className:
+                                                "flex md:hidden items-center ",
+                                        })}
+                                    >
+                                        {" "}
+                                        Habits
                                     </Link>
                                     <div className="h-8 w-px bg-zinc-200 hidden sm:block" />
                                     <Link
-                                        href="/habit/viewAll"
+                                        href="/habit/view/all"
                                         className={buttonVariants({
                                             size: "sm",
                                             className:
-                                                " hidden sm:flex items-center gap-1 ",
+                                                " hidden md:flex items-center gap-1 ",
                                         })}
                                     >
                                         {" "}
