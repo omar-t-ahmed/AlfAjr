@@ -2,13 +2,20 @@
 import React from "react";
 import Link from "next/link";
 import MaxWidthWrapper from "./MaxWidthWrapper";
-import { useState } from "react";
 import { buttonVariants } from "./ui/button";
 import { logOut } from "@/lib/auth";
 import { useAuth } from "@/lib/useAuth";
 import Image from "next/image";
 import logo from "../../public/alfajr-logo.png";
 import { ArrowRight } from "lucide-react";
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import menuIcon from "../../public/icons8-hamburger-menu-50.png";
 
 const Navbar = () => {
     const { user } = useAuth();
@@ -23,7 +30,6 @@ const Navbar = () => {
                             className="hidden sm:block h-5 w-5"
                             alt="Logo"
                         />
-
                         <Link
                             href="/"
                             className="flex z-40 pl-2 pt-0.5 text-xl font-bold text-white"
@@ -32,8 +38,7 @@ const Navbar = () => {
                         </Link>
                     </div>
                     <div className="h-full flex items-center space-x-4">
-                        <>
-                            {/* ternary */}
+                        <div className="hidden md:flex space-x-4">
                             {user ? (
                                 <>
                                     <button
@@ -43,7 +48,6 @@ const Navbar = () => {
                                             variant: "ghost",
                                         })}
                                     >
-                                        {" "}
                                         Sign out
                                     </button>
                                     <Link
@@ -51,11 +55,9 @@ const Navbar = () => {
                                         className={buttonVariants({
                                             size: "sm",
                                             variant: "ghost",
-                                            className:
-                                                " hidden sm:flex items-center ",
+                                            className: "hidden sm:flex items-center",
                                         })}
                                     >
-                                        {" "}
                                         Friends
                                     </Link>
                                     <Link
@@ -65,7 +67,6 @@ const Navbar = () => {
                                             variant: "ghost",
                                         })}
                                     >
-                                        {" "}
                                         Leaderboard
                                     </Link>
                                     <Link
@@ -73,11 +74,9 @@ const Navbar = () => {
                                         className={buttonVariants({
                                             size: "sm",
                                             variant: "ghost",
-                                            className:
-                                                "hidden md:flex items-center ",
+                                            className: "hidden md:flex items-center",
                                         })}
                                     >
-                                        {" "}
                                         Create Habit
                                     </Link>
                                     <Link
@@ -85,11 +84,9 @@ const Navbar = () => {
                                         className={buttonVariants({
                                             size: "sm",
                                             variant: "ghost",
-                                            className:
-                                                "flex md:hidden items-center ",
+                                            className: "flex md:hidden items-center",
                                         })}
                                     >
-                                        {" "}
                                         Habits
                                     </Link>
                                     <div className="h-8 w-px bg-zinc-200 hidden sm:block" />
@@ -97,11 +94,9 @@ const Navbar = () => {
                                         href="/habit/view/all"
                                         className={buttonVariants({
                                             size: "sm",
-                                            className:
-                                                " hidden md:flex items-center gap-1 ",
+                                            className: "hidden md:flex items-center gap-1",
                                         })}
                                     >
-                                        {" "}
                                         View Your Habits
                                         <ArrowRight className="ml-1.5 h-5 w-5" />
                                     </Link>
@@ -115,7 +110,6 @@ const Navbar = () => {
                                             variant: "ghost",
                                         })}
                                     >
-                                        {" "}
                                         Register
                                     </Link>
                                     <Link
@@ -125,12 +119,67 @@ const Navbar = () => {
                                             variant: "ghost",
                                         })}
                                     >
-                                        {" "}
                                         Sign In
                                     </Link>
                                 </>
                             )}
-                        </>
+                        </div>
+                        <div className="flex md:hidden">
+                            <DropdownMenu>
+                                <DropdownMenuTrigger asChild>
+                                    <button className="text-2xl">
+                                        <Image className="w-6 h-6" src={menuIcon} alt="menu icon" />
+                                    </button>
+                                </DropdownMenuTrigger>
+                                <DropdownMenuContent className="w-15 bg-zinc-800 text-white mt-4 border border-gray-600">
+                                    {user ? (
+                                        <>
+                                            <DropdownMenuItem onClick={logOut} className="!flex !items-center !justify-center">
+                                                Sign out
+                                            </DropdownMenuItem>
+                                            <DropdownMenuSeparator className="my-1 border-t border-zinc-400 mx-4" />
+                                            <DropdownMenuItem asChild className="!flex !items-center !justify-center">
+                                                <Link href="/social/friends">
+                                                    Friends
+                                                </Link>
+                                            </DropdownMenuItem>
+                                            <DropdownMenuSeparator className="my-1 border-t border-zinc-400 mx-4" />
+                                            <DropdownMenuItem asChild className="!flex !items-center !justify-center">
+                                                <Link href="/social/leaderboard">
+                                                    Leaderboard
+                                                </Link>
+                                            </DropdownMenuItem>
+                                            <DropdownMenuSeparator className="my-1 border-t border-zinc-400 mx-4" />
+                                            <DropdownMenuItem asChild className="!flex !items-center !justify-center">
+                                                <Link href="/habit/create">
+                                                    Create Habit
+                                                </Link>
+                                            </DropdownMenuItem>
+                                            <DropdownMenuSeparator className="my-1 border-t border-zinc-400 mx-4" />
+                                            <DropdownMenuItem asChild className="!flex !items-center !justify-center">
+                                                <Link href="/habit/view/all">
+                                                    View Your Habits
+                                                </Link>
+                                            </DropdownMenuItem>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <DropdownMenuItem asChild className="!flex !items-center !justify-center">
+                                                <Link href="/auth/register">
+                                                    Register
+                                                </Link>
+                                            </DropdownMenuItem>
+                                            <DropdownMenuSeparator className="my-1 border-t border-zinc-400 mx-4" />
+                                            <DropdownMenuItem asChild className="!flex !items-center !justify-center">
+                                                <Link href="/auth/login">
+                                                    Sign In
+                                                </Link>
+                                            </DropdownMenuItem>
+                                        </>
+                                    )}
+                                </DropdownMenuContent>
+                            </DropdownMenu>
+                        </div>
                     </div>
                 </div>
             </MaxWidthWrapper>
