@@ -5,7 +5,7 @@ import { developers } from "@/lib/data";
 
 const Developers = () => {
   return (
-    <main className="bg-zinc-900 text-white">
+    <main className="bg-zinc-900 text-white min-h-screen">
       <MaxWidthWrapper className="py-4">
         <div className="flex flex-col items-center">
           <div className="font-bold text-4xl my-8">Developers</div>
