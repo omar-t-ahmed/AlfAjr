@@ -38,3 +38,12 @@ enum Unit {
   Unit
   Minute
 }
+
+model Support {
+  id          Int      @id @default(autoincrement())
+  email       String
+  supportType String
+  description String
+  createdAt   DateTime @default(now())
+  status      String
+}
