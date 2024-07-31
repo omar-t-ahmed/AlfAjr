@@ -60,6 +60,12 @@ const Footer = () => {
                             >
                                 Cookie Policy
                             </Link>
+                            <Link
+                                href="/info/support"
+                                className="text-sm text-zinc-500 hover:text-zinc-100"
+                            >
+                                Support
+                            </Link>
                         </div>
                     </div>
                 </div>
