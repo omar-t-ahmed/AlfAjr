@@ -54,7 +54,7 @@ const ShuffleHabits = () => {
     };
 
     return (
-        <div className="w-full md:w-[30rem]">
+        <div className="w-full md:w-[25rem]">
             <div className="grid grid-cols-1 gap-16">
                 <div className={`relative p-4 rounded-2xl bg-gradient-to-r from-zinc-500 to-zinc-600 text-white`}>
                     <div className="absolute left-0 -top-10 z-40 pl-4">
