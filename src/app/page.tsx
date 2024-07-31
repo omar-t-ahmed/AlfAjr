@@ -10,10 +10,12 @@ export default function Home() {
             <MaxWidthWrapper className="py-4">
                 <div className="space-y-24 md:space-y-48 px-4">
                     <section className="flex flex-col md:flex-row gap-24 md:pt-24">
-                        <div className="space-y-6 md:space-y-10">
+                        <div className="space-y-6 md:space-y-10 md:w-3/5">
                             <h1 className="font-black text-5xl">
-                                Discover the power of small acts
+                            The most beloved deed to Allah
+                            <span className="text-green-600 font-black text-xl ml-2"> is the most regular and constant even if it were little.</span>
                             </h1>
+                            <p className="text-zinc-600 text-lg text-center mr-20 !mt-5">Sahih al-Bukhari 6464</p>
                             <p className="text-base-content/90 md:text-lg">
                                 Discover how much you will achieve in a year
                                 with our free calculator!
