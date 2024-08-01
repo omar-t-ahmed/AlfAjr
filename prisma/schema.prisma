@@ -14,6 +14,7 @@ model User {
   habits      Habit[]  @relation("UserHabits")
   friends     String[]
   totalReward Int
+  profilePicture Int @default(0)
 }
 
 model Habit {
