@@ -56,7 +56,7 @@ const HabitView = ({ params }: { params: { id: string } }) => {
 
     if (!habit) {
         return (
-            <div className="bg-zinc-900 h-screen text-white">
+            <div className="bg-zinc-900 min-h-screen text-white">
                 <MaxWidthWrapper className="py-16">
                     <div className="text-center text-3xl font-bold">
                         Loading...
@@ -67,7 +67,7 @@ const HabitView = ({ params }: { params: { id: string } }) => {
     }
 
     return (
-        <main className="bg-zinc-900 h-screen text-white">
+        <main className="bg-zinc-900 min-h-screen text-white">
             <MaxWidthWrapper className="py-16 flex flex-col items-center">
                 <Card className="text-white bg-gradient-to-r from-emerald-500 to-teal-600 w-[325px] md:w-[500px] relative">
                     <CardHeader>

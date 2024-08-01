@@ -140,7 +140,7 @@ const CreateHabit = () => {
     };
 
     return (
-        <main className="bg-zinc-900 h-screen text-white">
+        <main className="bg-zinc-900 min-h-screen text-white">
             <MaxWidthWrapper className="py-16">
                 <div className="flex flex-col align-middle justify-around">
                     <div className="flex flex-col items-center mb-16">

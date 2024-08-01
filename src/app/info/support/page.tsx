@@ -9,6 +9,9 @@ import {
 } from "@/components/ui/dropdown-menu";
 import axios from "axios";
 import { FaChevronDown } from "react-icons/fa";
+import { useRouter } from "next/navigation";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Support = () => {
     const [email, setEmail] = useState("");
@@ -16,6 +19,7 @@ const Support = () => {
     const [supportType, setSupportType] = useState("Comments");
     const [error, setError] = useState<string | null>(null);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const router = useRouter();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -27,16 +31,19 @@ const Support = () => {
                 status: "Open", // Initial status
                 createdAt: new Date(),
             });
-            // Handle success (e.g., show a notification or clear the form)
+            toast.success("Submission successful!");
+            setEmail("");
+            setComments("");
         } catch (error) {
             setError(
                 "Submission did not go through. Try again later! Or Email hasanhuda037@gmail.com"
             );
+            toast.error("Submission failed. Please try again later.");
         }
     };
 
     return (
-        <main className="bg-zinc-900 h-screen text-white">
+        <main className="bg-zinc-900 min-h-screen text-white">
             <MaxWidthWrapper className="py-4">
                 <div className="flex flex-col items-center">
                     <div className="font-bold text-3xl">Support</div>
@@ -132,6 +139,7 @@ const Support = () => {
                     </form>
                 </div>
             </MaxWidthWrapper>
+            <ToastContainer />
         </main>
     );
 };
