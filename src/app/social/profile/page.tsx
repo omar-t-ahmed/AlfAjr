@@ -7,6 +7,8 @@ import axios from "axios";
 import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Image from "next/image";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import placeholder from '../../../../public/placeholder.jpg'
 import pfp1 from "../../../../public/female-pfp-1.jpg";
 import pfp2 from "../../../../public/female-pfp-2.jpg";
@@ -60,6 +62,7 @@ const Profile = () => {
                     username: newUsername,
                     profilePicture: selectedPicture,
                 });
+                toast.success("Succesfully updated profile!");
             } catch (error) {
                 console.error("Failed to update profile:", error);
             }
@@ -69,15 +72,14 @@ const Profile = () => {
     return (
         <main className="bg-zinc-900 text-white">
             <MaxWidthWrapper className="py-4">
-                <div className="flex flex-col items-center">
-                    <div className="font-bold text-4xl my-6 text-green-600">
+                <div className="flex flex-col items-center bg-zinc-900 my-10">
+                    {/* <div className="font-bold text-4xl mb-6 text-green-600">
                         Your Profile
-                    </div>
-                    {userProfile ? (
-                        <Card className="w-full px-6 sm:px-2">
+                    </div> */}
+                        <Card className="w-full px-6 sm:px-2 bg-zinc-800 !border-none">
                             <CardHeader>
-                                <CardTitle className="text-xl text-center">
-                                    Profile Details
+                                <CardTitle className="text-xl text-center text-white">
+                                    Profile Picture
                                 </CardTitle>
                             </CardHeader>
                             <CardContent>
@@ -104,13 +106,17 @@ const Profile = () => {
                                             />
                                         ))}
                                     </div>
-                                    <input
-                                        type="text"
-                                        value={newUsername}
-                                        onChange={(e) => setNewUsername(e.target.value)}
-                                        className="text-black p-2 rounded"
-                                        placeholder="New Username"
-                                    />
+                                    <div className="flex flex-col items-center mb-4">
+                                        <label htmlFor="username" className="mb-2 text-white">Username:</label>
+                                        <input
+                                            id="username"
+                                            type="text"
+                                            value={newUsername}
+                                            onChange={(e) => setNewUsername(e.target.value)}
+                                            className="text-white bg-zinc-700 p-2 rounded text-center"
+                                            placeholder="New Username"
+                                        />
+                                    </div>
                                     <button
                                         onClick={handleUpdateProfile}
                                         className={buttonVariants({
@@ -120,12 +126,10 @@ const Profile = () => {
                                     >
                                         Update Profile
                                     </button>
+                                    <ToastContainer />
                                 </div>
                             </CardContent>
                         </Card>
-                    ) : (
-                        <div>Loading...</div>
-                    )}
                 </div>
             </MaxWidthWrapper>
         </main>

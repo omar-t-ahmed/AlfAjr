@@ -70,6 +70,15 @@ const Navbar = () => {
                                         Leaderboard
                                     </Link>
                                     <Link
+                                        href="/social/profile"
+                                        className={buttonVariants({
+                                            size: "sm",
+                                            variant: "ghost",
+                                        })}
+                                    >
+                                        Profile
+                                    </Link>
+                                    <Link
                                         href="/habit/create"
                                         className={buttonVariants({
                                             size: "sm",
@@ -147,6 +156,12 @@ const Navbar = () => {
                                             <DropdownMenuItem asChild className="!flex !items-center !justify-center">
                                                 <Link href="/social/leaderboard">
                                                     Leaderboard
+                                                </Link>
+                                            </DropdownMenuItem>
+                                            <DropdownMenuSeparator className="my-1 border-t border-zinc-400 mx-4" />
+                                            <DropdownMenuItem asChild className="!flex !items-center !justify-center">
+                                                <Link href="/social/profile">
+                                                    Profile
                                                 </Link>
                                             </DropdownMenuItem>
                                             <DropdownMenuSeparator className="my-1 border-t border-zinc-400 mx-4" />
