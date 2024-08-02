@@ -1,36 +1,17 @@
-function calculateReward(worship: string, dailyQuantity: number): number {
-  let reward = 1;
-  console.log(worship);
-  console.log(dailyQuantity);
-  if (!isNaN(dailyQuantity)) {
-    switch (worship) {
-      case "Quran":
-        reward = dailyQuantity * 500;
-        break;
-      case "Salawat":
-        reward = dailyQuantity * 10;
-        break;
-      case "Nafl":
-      case "Thikr":
-        reward = dailyQuantity * 1;
-        break;
-      default:
-        reward = 1;
-    }
-  }
-  return reward;
-}
-
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/db'; // Ensure this path is correct
+import { Unit, Worship } from '@prisma/client';
+import { calculateReward, createHabit } from './habitService';
 
 export async function GET(req: NextRequest) {
   return await getHabit(req);
 }
 
-export async function POST(req: NextRequest) {
-  return await createHabit(req);
-}
+// Removing the POST request because we no longer create habit, and instead have it by default
+// export async function POST(req: NextRequest) {
+//   return await createHabit(req);
+// }
+//you can still create a POST request just not the createHabit function
 
 export async function PATCH(req: NextRequest) {
   return await updateHabit(req);
@@ -60,20 +41,14 @@ async function getHabit(req: NextRequest) {
   }
 }
 
-async function createHabit(req: NextRequest) {
-  const { userId, worship, dailyQuantity, unit, reward } = await req.json();
-  
-  console.log('Incoming data:', { userId, worship, dailyQuantity, unit, reward });
-
+export async function POST(req: NextRequest) {
   try {
-    const habit = await db.habit.create({
-      data: { userId, worship, dailyQuantity, unit, reward },
-    });
-    console.log('Habit created successfully:', habit);
+    const data = await req.json();
+    const habit = await createHabit(data);
     return NextResponse.json(habit, { status: 201 });
-  } catch (error:any) {
-    console.error('Failed to create habit:', error.message, error.stack);
-    return NextResponse.json({ error: 'Failed to create habit', details: error.message }, { status: 500 });
+  } catch (error) {
+    console.error('Failed to create habit:', error);
+    return NextResponse.json({ error: 'Failed to create habit' }, { status: 500 });
   }
 }
 
