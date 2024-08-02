@@ -78,7 +78,8 @@ const Navbar = () => {
                                     >
                                         Profile
                                     </Link>
-                                    <Link
+                                    {/* Create Habit Not Needed anymore */}
+                                    {/* <Link
                                         href="/habit/create"
                                         className={buttonVariants({
                                             size: "sm",
@@ -87,7 +88,7 @@ const Navbar = () => {
                                         })}
                                     >
                                         Create Habit
-                                    </Link>
+                                    </Link> */}
                                     <Link
                                         href="/habit/view/all"
                                         className={buttonVariants({
@@ -164,12 +165,12 @@ const Navbar = () => {
                                                     Profile
                                                 </Link>
                                             </DropdownMenuItem>
-                                            <DropdownMenuSeparator className="my-1 border-t border-zinc-400 mx-4" />
+                                            {/* <DropdownMenuSeparator className="my-1 border-t border-zinc-400 mx-4" />
                                             <DropdownMenuItem asChild className="!flex !items-center !justify-center">
                                                 <Link href="/habit/create">
                                                     Create Habit
                                                 </Link>
-                                            </DropdownMenuItem>
+                                            </DropdownMenuItem> */}
                                             <DropdownMenuSeparator className="my-1 border-t border-zinc-400 mx-4" />
                                             <DropdownMenuItem asChild className="!flex !items-center !justify-center">
                                                 <Link href="/habit/view/all">

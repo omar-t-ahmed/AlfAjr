@@ -108,7 +108,7 @@ const AllHabits = () => {
                     <div className="font-bold text-4xl my-6 text-green-600">
                         Your <span className="lg:hidden">Daily </span>Habits
                     </div>
-                    <Link
+                    {/* <Link
                         href="/habit/create"
                         className={buttonVariants({
                             size: "lg",
@@ -118,7 +118,7 @@ const AllHabits = () => {
                     >
                         Create New Habit
                         <Plus className="ml-1.5 h-5 w-5" />
-                    </Link>
+                    </Link> */}
                     {userWithHabits ? (
                         <div className="w-full px-6 sm:px-2">
                             <div className="text-3xl mb-4 text-bold mt-8">
