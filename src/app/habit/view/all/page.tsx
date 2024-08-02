@@ -8,14 +8,7 @@ import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Plus } from "lucide-react";
-
-interface Habit {
-    id: number;
-    worship: string;
-    dailyQuantity: number;
-    unit: string;
-    reward: number;
-}
+import { Habit, Worship, Unit } from '@/lib/interfaces';
 
 interface UserWithHabits {
     id: number;
@@ -42,16 +35,38 @@ const AllHabits = () => {
                     });
 
                     const userId = userResponse.data.id;
-                    const userWithHabitsResponse = await axios.get(
-                        `/api/users`,
-                        {
-                            params: {
-                                id: userId,
-                                includeHabits: true,
-                            },
-                        }
+                    const userWithHabitsResponse = await axios.get(`/api/users`, {
+                        params: {
+                            id: userId,
+                            includeHabits: true,
+                        },
+                    });
+
+                    const userHabits = userWithHabitsResponse.data.habits;
+                    const defaultHabits = [
+                        { userId, worship: Worship.Quran, dailyQuantity: 1, unit: Unit.Verse },
+                        { userId, worship: Worship.Salawat, dailyQuantity: 1, unit: Unit.Unit },
+                        { userId, worship: Worship.Nafl, dailyQuantity: 1, unit: Unit.Unit },
+                        { userId, worship: Worship.Thikr, dailyQuantity: 1, unit: Unit.Minute },
+                    ];
+
+                    const missingHabits = defaultHabits.filter(defaultHabit => 
+                        !userHabits.some((habit: Habit) => habit.worship === defaultHabit.worship)
                     );
-                    setUserWithHabits(userWithHabitsResponse.data);
+
+                    for (const habit of missingHabits) {
+                        await axios.post('/api/habits', habit);
+                    }
+
+                    // Fetch the user with the updated habits
+                    const updatedUserWithHabitsResponse = await axios.get(`/api/users`, {
+                        params: {
+                            id: userId,
+                            includeHabits: true,
+                        },
+                    });
+
+                    setUserWithHabits(updatedUserWithHabitsResponse.data);
                 } catch (error) {
                     console.error("Failed to fetch user or habits:", error);
                 }

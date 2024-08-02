@@ -23,14 +23,17 @@ function calculateReward(worship: string, dailyQuantity: number): number {
 
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/db'; // Ensure this path is correct
+import { Unit, Worship } from '@prisma/client';
 
 export async function GET(req: NextRequest) {
   return await getHabit(req);
 }
 
-export async function POST(req: NextRequest) {
-  return await createHabit(req);
-}
+// Removing the POST request because we no longer create habit, and instead have it by default
+// export async function POST(req: NextRequest) {
+//   return await createHabit(req);
+// }
+//you can still create a POST request just not the createHabit function
 
 export async function PATCH(req: NextRequest) {
   return await updateHabit(req);
@@ -60,9 +63,10 @@ async function getHabit(req: NextRequest) {
   }
 }
 
-async function createHabit(req: NextRequest) {
-  const { userId, worship, dailyQuantity, unit, reward } = await req.json();
-  
+export async function createHabit(data: { userId: number; worship: Worship; dailyQuantity: number; unit: Unit }) {
+  const { userId, worship, dailyQuantity, unit } = data;
+  const reward = calculateReward(worship, dailyQuantity);
+
   console.log('Incoming data:', { userId, worship, dailyQuantity, unit, reward });
 
   try {
@@ -70,10 +74,21 @@ async function createHabit(req: NextRequest) {
       data: { userId, worship, dailyQuantity, unit, reward },
     });
     console.log('Habit created successfully:', habit);
-    return NextResponse.json(habit, { status: 201 });
-  } catch (error:any) {
+    return habit;
+  } catch (error: any) {
     console.error('Failed to create habit:', error.message, error.stack);
-    return NextResponse.json({ error: 'Failed to create habit', details: error.message }, { status: 500 });
+    throw new Error('Failed to create habit');
+  }
+}
+
+export async function POST(req: NextRequest) {
+  try {
+    const data = await req.json();
+    const habit = await createHabit(data);
+    return NextResponse.json(habit, { status: 201 });
+  } catch (error) {
+    console.error('Failed to create habit:', error);
+    return NextResponse.json({ error: 'Failed to create habit' }, { status: 500 });
   }
 }
 
