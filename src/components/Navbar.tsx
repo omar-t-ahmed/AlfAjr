@@ -16,9 +16,25 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import menuIcon from "../../public/icons8-hamburger-menu-50.png";
+import { useRouter } from 'next/navigation';
 
 const Navbar = () => {
     const { user } = useAuth();
+    const router = useRouter();
+
+    const handleSignOut = async () => {
+        try {
+            await logOut();
+            router.push('/');
+        } catch (error) {
+            console.error("Error signing out:", error);
+        }
+    };
+
+    if (!router) {
+        return null; 
+    }
+
     return (
         <nav className="sticky z-[100] h-14 inset-x-0 top-0 w-full border-b border-gray-900 bg-zinc-800 backdrop-blur-lg transition-all text-white">
             <MaxWidthWrapper>
@@ -42,7 +58,7 @@ const Navbar = () => {
                             {user ? (
                                 <>
                                     <button
-                                        onClick={logOut}
+                                        onClick={handleSignOut}
                                         className={buttonVariants({
                                             size: "sm",
                                             variant: "ghost",
@@ -134,7 +150,7 @@ const Navbar = () => {
                                 <DropdownMenuContent className="w-15 bg-zinc-800 text-white mt-4 border border-gray-600">
                                     {user ? (
                                         <>
-                                            <DropdownMenuItem onClick={logOut} className="!flex !items-center !justify-center">
+                                            <DropdownMenuItem onClick={handleSignOut} className="!flex !items-center !justify-center">
                                                 Sign out
                                             </DropdownMenuItem>
                                             <DropdownMenuSeparator className="my-1 border-t border-zinc-400 mx-4" />
