@@ -1,3 +1,26 @@
+function calculateReward(worship: string, dailyQuantity: number): number {
+  let reward = 1;
+  console.log(worship);
+  console.log(dailyQuantity);
+  if (!isNaN(dailyQuantity)) {
+    switch (worship) {
+      case "Quran":
+        reward = dailyQuantity * 500;
+        break;
+      case "Salawat":
+        reward = dailyQuantity * 10;
+        break;
+      case "Nafl":
+      case "Thikr":
+        reward = dailyQuantity * 1;
+        break;
+      default:
+        reward = 1;
+    }
+  }
+  return reward;
+}
+
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/db'; // Ensure this path is correct
 
@@ -57,7 +80,8 @@ async function createHabit(req: NextRequest) {
 async function updateHabit(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const id = searchParams.get('id');
-  const { worship, dailyQuantity, unit, reward } = await req.json();
+  const { worship, dailyQuantity, unit } = await req.json();
+  const reward = calculateReward(worship, dailyQuantity);
 
   try {
     const habit = await db.habit.update({
@@ -70,6 +94,7 @@ async function updateHabit(req: NextRequest) {
     return NextResponse.json({ error: 'Failed to update habit' }, { status: 500 });
   }
 }
+
 
 async function deleteHabit(req: NextRequest) {
   const { searchParams } = new URL(req.url);

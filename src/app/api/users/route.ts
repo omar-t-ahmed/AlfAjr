@@ -82,12 +82,12 @@ async function createUser(req: NextRequest) {
 async function updateUser(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const id = searchParams.get('id');
-  const { email, username, totalReward, friends } = await req.json();
+  const { email, username, totalReward, friends, profilePicture } = await req.json();
 
   try {
     const user = await db.user.update({
       where: { id: Number(id) },
-      data: { email, username, totalReward, friends },
+      data: { email, username, totalReward, friends, profilePicture },
     });
     return NextResponse.json(user);
   } catch (error) {
