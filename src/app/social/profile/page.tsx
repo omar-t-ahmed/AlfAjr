@@ -70,7 +70,7 @@ const Profile = () => {
     };
 
     return (
-        <main className="bg-zinc-900 text-white">
+        <main className="bg-zinc-900 min-h-screen text-white">
             <MaxWidthWrapper className="py-4">
                 <div className="flex flex-col items-center bg-zinc-900 my-10">
                     {/* <div className="font-bold text-4xl mb-6 text-green-600">
