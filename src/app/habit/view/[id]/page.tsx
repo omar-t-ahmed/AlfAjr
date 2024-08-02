@@ -26,12 +26,22 @@ const HabitView = ({ params }: { params: { id: string } }) => {
 
     const [habit, setHabit] = useState<Habit | null>(null);
     const [missionCompleted, setMissionCompleted] = useState<number>(0);
+    const [isEditing, setIsEditing] = useState<boolean>(false);
+    const [newDailyQuantity, setNewDailyQuantity] = useState<number | null>(null);
     const router = useRouter();
+    const [dailyReward, setDailyReward] = useState<number | null>(null);
+    const [annualReward, setAnnualReward] = useState<number>(0);
+
     useEffect(() => {
         if (id) {
             axios
                 .get(`/api/habits/${id}`)
-                .then((response) => setHabit(response.data))
+                .then((response) => {
+                    setHabit(response.data);
+                    setNewDailyQuantity(response.data.dailyQuantity);
+                    setDailyReward(response.data.reward);
+                    setAnnualReward(response.data.reward * 365);
+                })
                 .catch((error) =>
                     console.error("Failed to fetch habit:", error)
                 );
@@ -44,13 +54,41 @@ const HabitView = ({ params }: { params: { id: string } }) => {
         setMissionCompleted(event.target.checked ? 1 : 0);
     };
 
+    const handleEditClick = () => {
+        setIsEditing(true);
+    };
+
+    const handleSave = (id: number) => {
+        if (newDailyQuantity === null) {
+            return; // Prevent submission if the input is empty
+        }
+        axios
+            .patch(`/api/habits?id=${id}`, { worship: habit!.worship, dailyQuantity: newDailyQuantity })
+            .then((response) => {
+                const updatedHabit = response.data;
+                setHabit(updatedHabit);
+                setDailyReward(updatedHabit.reward);
+                setAnnualReward(updatedHabit.reward * 365);
+                setIsEditing(false);
+            })
+            .catch((error) => {
+                console.error("Failed to update habit:", error);
+            });
+    };
+
+    const handleCancel = () => {
+        setNewDailyQuantity(habit?.dailyQuantity || 0);
+        setIsEditing(false);
+    };
+
     const handleDelete = (id: number) => {
-        axios.delete(`/api/habits/${id}`)
+        axios
+            .delete(`/api/habits/${id}`)
             .then(() => {
                 router.push('/habit/view/all');
             })
-            .catch(error => {
-                console.error('Failed to delete habit:', error);
+            .catch((error) => {
+                console.error("Failed to delete habit:", error);
             });
     };
 
@@ -81,32 +119,52 @@ const HabitView = ({ params }: { params: { id: string } }) => {
                                 </button>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align="end" sideOffset={5}>
-                                <DropdownMenuItem onClick={()=>handleDelete(habit.id)}>
+                                <DropdownMenuItem onClick={handleEditClick}>
+                                    Edit
+                                </DropdownMenuItem>
+                                <DropdownMenuItem onClick={() => handleDelete(habit.id)}>
                                     Delete
                                 </DropdownMenuItem>
                             </DropdownMenuContent>
                         </DropdownMenu>
                     </CardHeader>
                     <CardContent>
-                        <div>
-                            <span className="font-bold">Daily Quantity:</span>{" "}
-                            {habit.dailyQuantity} {habit.unit}
-                            {habit.dailyQuantity > 1 ? "s" : ""}
+                        <div className="flex items-center">
+                            <span className="font-bold">Daily Quantity:{" "}</span>{" "}
+                            {isEditing ? (
+                                <>
+                                    <input
+                                        type="number"
+                                        value={newDailyQuantity ?? ''}
+                                        onChange={(e) => setNewDailyQuantity(Number(e.target.value) || null)}
+                                        className="bg-white text-black px-2 py-1 rounded ml-2"
+                                    />
+                                    <button
+                                        onClick={() => handleSave(habit.id)}
+                                        className="ml-2 bg-green-500 text-white px-4 py-2 rounded"
+                                    >
+                                        Save
+                                    </button>
+                                    <button
+                                        onClick={handleCancel}
+                                        className="ml-2 bg-gray-500 text-white px-4 py-2 rounded"
+                                    >
+                                        Cancel
+                                    </button>
+                                </>
+                            ) : (
+                                `${habit.dailyQuantity} ${habit.unit}${habit.dailyQuantity > 1 ? "s" : ""}`
+                            )}
                         </div>
-                        {(habit.worship === "Quran" ||
-                            habit.worship === "Salawat") && (
+                        {(habit.worship === "Quran" || habit.worship === "Salawat") && (
                             <div>
                                 <div>
-                                    <span className="font-bold">
-                                        Daily Reward:
-                                    </span>{" "}
-                                    {habit.reward}
+                                    <span className="font-bold">Daily Reward:</span>{" "}
+                                    {dailyReward}
                                 </div>
                                 <div>
-                                    <span className="font-bold">
-                                        Yearly Reward:
-                                    </span>{" "}
-                                    {(habit.reward * 365).toLocaleString()} 🗓️
+                                    <span className="font-bold">Yearly Reward:</span>{" "}
+                                    {annualReward.toLocaleString()}
                                 </div>
                             </div>
                         )}
