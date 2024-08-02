@@ -26,13 +26,13 @@ export const developers = [
     image: "/SaqifAbedin.jpg",
     technologies: [],
   },
-  // {
-  //   name: "Hasan Huda",
-  //   description: "Software Engineer",
-  //   github: "https://github.com/hasan-huda",
-  //   linkedin: "https://www.linkedin.com/in/hasan-huda/",
-  //   portfolio: "https://hasan-portfolio-eight.vercel.app",
-  //   image: "/HasanHuda.jpeg",
-  //   technologies: ["NextJS", "Typescript", "Tailwind", "PostgreSQL"],
-  // },
+  {
+    name: "Taha Khan",
+    description: "Software Engineer",
+    github: "https://github.com/tkhan271828",
+    linkedin: "www.linkedin.com/in/taha-khan1",
+    portfolio: "https://tahkhan123.github.io/landing-page/",
+    image: "/TahaKhan.jpg",
+    technologies: [],
+  },
 ];
