@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/db"; // Ensure this path is correct
-import { createHabit } from "../habits/route";
 import { Unit, Worship } from "@prisma/client";
+import { createHabit } from "../habits/habitService";
 
 export async function GET(req: NextRequest) {
     return await findUser(req);
