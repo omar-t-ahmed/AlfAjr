@@ -33,6 +33,7 @@ const FriendsPage: React.FC = () => {
     const [loading, setLoading] = useState<boolean>(true);
     const [username, setUsername] = useState<string>("");  // State for the input field
     const [errorMessage, setErrorMessage] = useState<string>("");
+    const [successMessage, setSuccessMessage] = useState<string>(""); // State for success message
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -72,7 +73,7 @@ const FriendsPage: React.FC = () => {
                 </div>
                 <button
                     className="bg-red-500 text-white text-sm px-2 py-2 rounded"
-                    onClick={() => handleRemoveFriend(friend.id)}  // Use friend.id here
+                    onClick={() => handleRemoveFriend(friend.id)}  // Pass friend's ID here
                 >
                     Remove
                 </button>
@@ -82,17 +83,28 @@ const FriendsPage: React.FC = () => {
 
     const handleRemoveFriend = async (friendId: number) => {
         try {
-            const response = await axios.delete(`/api/friends/${friendId}`);
-    
-            // Update the friends list in the userData state
-            setUserData(prevUserData => {
-                if (!prevUserData) return null;
-    
-                return {
-                    ...prevUserData,
-                    friends: prevUserData.friends.filter(friend => friend.id !== friendId),
-                };
+            const response = await axios.delete('/api/friendRequests', {
+                data: {
+                    currentUserId: userData?.id,
+                    friendId: friendId,
+                },
             });
+
+            if (response.status === 200) {
+                console.log(response.data.message); // Confirm successful removal
+    
+                // Update the friends list in the userData state
+                setUserData(prevUserData => {
+                    if (!prevUserData) return null;
+    
+                    return {
+                        ...prevUserData,
+                        friends: prevUserData.friends.filter(friend => friend.id !== friendId),
+                    };
+                });
+            } else {
+                console.error('Failed to remove friend:', response.data.error);
+            }
         } catch (error) {
             console.error('Failed to remove friend:', error);
         }
@@ -140,101 +152,122 @@ const FriendsPage: React.FC = () => {
                     username: username.trim(),
                 },
             });
-
+    
             const receiver = response.data;
-
+    
             if (!receiver) {
                 setErrorMessage("User not found.");
+                setSuccessMessage("");  // Clear success message if there was an error
                 return;
             }
-
+    
+            // Check if senderId and receiverId are the same
+            if (userData?.id === receiver.id) {
+                setErrorMessage("You cannot send a friend request to yourself.");
+                setSuccessMessage("");  // Clear success message if there was an error
+                return;
+            }
+    
             await axios.post('/api/friendRequests', {
                 senderId: userData?.id,
                 receiverId: receiver.id,
             });
-
+    
             setErrorMessage("");
+            setSuccessMessage("Friend request sent successfully!");  // Set success message
             setUsername("");  // Clear the input field after sending the request
             console.log("Friend request sent!");
         } catch (error) {
             console.error("Failed to send friend request:", error);
             setErrorMessage("Failed to send friend request.");
+            setSuccessMessage("");  // Clear success message if there was an error
         }
     };
 
     return (
         <main className="bg-zinc-900 min-h-screen text-white">
             <MaxWidthWrapper className="py-4">
-                <div className="flex flex-col items-center">
-
-                    <div className="mt-8">
-                        <div className="font-bold text-3xl mb-4 text-center">Add Friend</div>
-                        <input
-                            type="text"
-                            value={username}
-                            onChange={(e) => setUsername(e.target.value)}
-                            placeholder="Enter username"
-                            className="p-2 rounded bg-gray-700 text-white"
-                        />
-                        <button
-                            onClick={handleSendFriendRequest}
-                            className="ml-4 bg-blue-500 text-white px-4 py-2 rounded"
-                        >
-                            Send Friend Request
-                        </button>
-                        {errorMessage && (
-                            <div className="text-red-500 mt-4">{errorMessage}</div>
-                        )}
-                    </div>
-
-                    <div className="font-bold text-4xl my-6">Your Friends 😎</div>
-                    {loading ? (
-                        <div className="text-green-600 text-2xl mt-8 font-semibold">
-                            Loading friends...
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:space-x-8">
+                    <div className="w-full sm:w-1/2 mb-8 sm:mb-0">
+                        <div className="font-bold text-4xl my-6 text-center">Add Friend</div>
+                        <div className="flex space-x-2 p-4 px-12">
+                            <input
+                                type="text"
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}
+                                placeholder="Enter username"
+                                className="w-full p-2 rounded bg-gray-700 text-white"
+                            />
+                            <button
+                                onClick={handleSendFriendRequest}
+                                className="bg-blue-500 text-white px-4 py-2 rounded"
+                            >
+                                Send
+                            </button>
                         </div>
-                    ) : (
-                        <>
-                            {userData && userData.friends && userData.friends.length > 0 ? (
-                                <div className="w-full max-w-md">
-                                    <div className="max-h-64 overflow-y-auto p-4 rounded-lg">
-                                        {friendsList}
-                                    </div>
-                                </div>
-                            ) : (
-                                <div className="text-green-600 text-2xl mt-8 font-semibold">
-                                    No friends found.
-                                </div>
-                            )}
+                        {errorMessage && (
+                            <div className="text-red-500 mt-4 text-center">{errorMessage}</div>
+                        )}
+                        {successMessage && (
+                            <div className="text-green-500 mt-4 text-center">{successMessage}</div>
+                        )}
 
-                            <div className="mt-8">
-                                <div className="font-bold text-3xl mb-4">Pending Friend Requests</div>
-                                {friendRequests.length > 0 ? (
-                                    friendRequests.map(request => (
-                                        <div key={request.id} className="flex items-center mb-4">
+                        <div className="mt-8">
+                            <div className="font-bold text-3xl mb-4 text-center">Pending Friend Requests</div>
+                            {friendRequests.length > 0 ? (
+                                friendRequests.map(request => (
+                                    <div 
+                                        key={request.id} 
+                                        className="flex items-center justify-between mx-10 p-4 mb-4 border border-zinc-800 rounded-lg"
+                                    >
+                                        <div className="flex items-center">
                                             <ProfilePicture profilePictureNumber={request.sender.profilePicture} />
                                             <span className="ml-4 text-xl">{request.sender.username}</span>
+                                        </div>
+                                        <div className="flex space-x-4">
                                             <button
-                                                className="ml-4 bg-green-500 text-white px-4 py-2 rounded"
+                                                className="bg-green-500 text-white px-4 py-2 rounded"
                                                 onClick={() => handleAcceptFriendRequest(request.id)}
                                             >
                                                 Accept
                                             </button>
                                             <button
-                                                className="ml-4 bg-red-500 text-white px-4 py-2 rounded"
+                                                className="bg-red-500 text-white px-4 py-2 rounded"
                                                 onClick={() => handleDenyFriendRequest(request.id)}
                                             >
                                                 Deny
                                             </button>
                                         </div>
-                                    ))
-                                ) : (
-                                    <div className="text-yellow-600 text-xl text-center">No pending friend requests.</div>
-                                )}
-                            </div>
+                                    </div>
+                                ))
+                            ) : (
+                                <div className="text-yellow-600 text-xl text-center">No pending friend requests.</div>
+                            )}
+                        </div>
+                    </div>
 
-                            {/* Add Friend Request Section */}
-                        </>
-                    )}
+                    <div className="w-full sm:w-1/2 flex flex-col items-center">
+                        <div className="font-bold text-4xl my-6">Your Friends 😎</div>
+                        {loading ? (
+                            <div className="text-green-600 text-2xl mt-8 font-semibold">
+                                Loading friends...
+                            </div>
+                        ) : (
+                            <>
+                                {userData && userData.friends && userData.friends.length > 0 ? (
+                                    <div className="w-full max-w-md">
+                                        <div className="max-h-64 overflow-y-auto p-4 rounded-lg">
+                                            {friendsList}
+                                        </div>
+                                    </div>
+                                ) : (
+                                    <div className="text-green-600 text-2xl mt-8 font-semibold">
+                                        No friends found.
+                                    </div>
+                                )}
+                            </>
+                        )}
+                    </div>
                 </div>
             </MaxWidthWrapper>
         </main>
