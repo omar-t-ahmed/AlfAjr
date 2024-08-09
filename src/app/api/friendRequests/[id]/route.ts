@@ -3,122 +3,106 @@ import { PrismaClient } from '@prisma/client';
 
 const db = new PrismaClient();
 
-export async function POST(req: NextRequest) {
-  const { senderId, receiverId } = await req.json();
-
-  try {
-    // Check if a friend request already exists
-    const existingRequest = await db.friend.findFirst({
-      where: {
-        senderId: senderId,
-        receiverId: receiverId,
-      },
-    });
-
-    if (existingRequest) {
-      return NextResponse.json({ error: 'Friend request already exists' }, { status: 400 });
+export async function PATCH(req: NextRequest, { params }: { params: { id: string } }) {
+    const friendRequestId = Number(params.id);
+    const { status } = await req.json();
+    
+    if (status !== 'ACCEPTED' && status !== 'REJECTED') {
+    return NextResponse.json({ error: 'Invalid status' }, { status: 400 });
     }
 
-    const friendRequest = await db.friend.create({
-      data: {
-        senderId: senderId,
-        receiverId: receiverId,
-        status: 'PENDING',
-      },
+    try {
+    // Check if the friend request exists
+    const existingRequest = await db.friend.findUnique({
+        where: { id: friendRequestId },
     });
 
-    return NextResponse.json(friendRequest, { status: 201 });
-  } catch (error) {
-    console.error('Failed to create friend request:', error);
-    return NextResponse.json({ error: 'Failed to create friend request' }, { status: 500 });
-  }
-}
+    if (!existingRequest) {
+        return NextResponse.json({ error: 'Friend request not found' }, { status: 404 });
+    }
 
-export async function PATCH(req: NextRequest, { params }: { params: { id: string } }) {
-  const friendRequestId = Number(params.id);
-  const { status } = await req.json();
-
-  if (status !== 'ACCEPTED' && status !== 'REJECTED') {
-    return NextResponse.json({ error: 'Invalid status' }, { status: 400 });
-  }
-
-  try {
+    // Update the status of the friend request
     const updatedFriendRequest = await db.friend.update({
-      where: { id: friendRequestId },
-      data: { status: status },
-      include: { sender: true, receiver: true },
+        where: { id: friendRequestId },
+        data: { status: status },
+        include: { sender: true, receiver: true },
     });
 
+    // If the friend request is accepted, add each user to the other's friends array
     if (status === 'ACCEPTED') {
-      // Add each other to friends array
-      await db.user.update({
+        await db.user.update({
         where: { id: updatedFriendRequest.senderId },
         data: {
-          friends: {
+            friends: {
             push: updatedFriendRequest.receiverId,
-          },
+            },
         },
-      });
+        });
 
-      await db.user.update({
+        await db.user.update({
         where: { id: updatedFriendRequest.receiverId },
         data: {
-          friends: {
+            friends: {
             push: updatedFriendRequest.senderId,
-          },
+            },
         },
-      });
+        });
     }
 
     return NextResponse.json(updatedFriendRequest);
-  } catch (error) {
+    } catch (error) {
     console.error('Failed to update friend request:', error);
     return NextResponse.json({ error: 'Failed to update friend request' }, { status: 500 });
-  }
+    }
 }
 
-export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
-  const friendRequestId = Number(params.id);
 
-  try {
+export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
+    const friendRequestId = Number(params.id);
+
+    if (isNaN(friendRequestId)) {
+    return NextResponse.json({ error: 'Invalid friend request ID' }, { status: 400 });
+    }
+
+    try {
     // Fetch the friend request details
     const friendRequest = await db.friend.findUnique({
-      where: { id: friendRequestId },
-      include: { sender: true, receiver: true },
+        where: { id: friendRequestId },
+        include: { sender: true, receiver: true },
     });
 
     if (!friendRequest) {
-      return NextResponse.json({ error: 'Friendship not found' }, { status: 404 });
+        return NextResponse.json({ error: 'Friendship not found' }, { status: 404 });
     }
 
     // Update the sender's friends array by removing the receiver
     await db.user.update({
-      where: { id: friendRequest.senderId },
-      data: {
+        where: { id: friendRequest.senderId },
+        data: {
         friends: {
-          set: friendRequest.sender.friends.filter((friendId: number) => friendId !== friendRequest.receiverId),
+            set: friendRequest.sender.friends.filter((friendId: number) => friendId !== friendRequest.receiverId),
         },
-      },
+        },
     });
 
     // Update the receiver's friends array by removing the sender
     await db.user.update({
-      where: { id: friendRequest.receiverId },
-      data: {
+        where: { id: friendRequest.receiverId },
+        data: {
         friends: {
-          set: friendRequest.receiver.friends.filter((friendId: number) => friendId !== friendRequest.senderId),
+            set: friendRequest.receiver.friends.filter((friendId: number) => friendId !== friendRequest.senderId),
         },
-      },
+        },
     });
 
     // Finally, delete the friend request record
     await db.friend.delete({
-      where: { id: friendRequestId },
+        where: { id: friendRequestId },
     });
 
     return NextResponse.json({ message: 'Friendship deleted successfully' });
-  } catch (error) {
+    } catch (error) {
     console.error('Failed to delete friendship:', error);
     return NextResponse.json({ error: 'Failed to delete friendship' }, { status: 500 });
-  }
+    }
 }

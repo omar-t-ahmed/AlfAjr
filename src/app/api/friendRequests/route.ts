@@ -3,53 +3,33 @@ import { PrismaClient } from '@prisma/client';
 
 const db = new PrismaClient();
 
-export async function GET(req: NextRequest, { params }: { params: { id: string } }) {
-    // Ensure that params.id is defined
-    if (!params || !params.id) {
-        return NextResponse.json({ error: 'Invalid request: ID is missing' }, { status: 400 });
-    }
-
-    // Convert the string 'id' to a number
-    const userId = Number(params.id);
-
-    // Check if the userId is a valid number
-    if (isNaN(userId)) {
-        return NextResponse.json({ error: 'Invalid user ID' }, { status: 400 });
-    }
+export async function POST(req: NextRequest) {
+    const { senderId, receiverId } = await req.json();
 
     try {
-        // Fetch the user to get the friends array
-        const user = await db.user.findUnique({
-        where: { id: userId },
-        select: {
-            friends: true, // Only select the friends array
-        },
-        });
-
-        // Check if the user exists
-        if (!user) {
-        return NextResponse.json({ error: 'User not found' }, { status: 404 });
-        }
-
-        // If the user has no friends, return an empty array
-        if (!user.friends || user.friends.length === 0) {
-        return NextResponse.json([]);
-        }
-
-        // Fetch details of all friends using their IDs
-        const friends = await db.user.findMany({
+        // Check if a friend request already exists
+        const existingRequest = await db.friend.findFirst({
         where: {
-            id: { in: user.friends },
-        },
-        select: {
-            id: true,
-            username: true,
+            senderId: senderId,
+            receiverId: receiverId,
         },
         });
 
-        return NextResponse.json(friends);
+        if (existingRequest) {
+        return NextResponse.json({ error: 'Friend request already exists' }, { status: 400 });
+        }
+
+        const friendRequest = await db.friend.create({
+        data: {
+            senderId: senderId,
+            receiverId: receiverId,
+            status: 'PENDING',
+        },
+        });
+
+        return NextResponse.json(friendRequest, { status: 201 });
     } catch (error) {
-        console.error('Failed to fetch friends:', error);
-        return NextResponse.json({ error: 'Failed to fetch friends' }, { status: 500 });
+        console.error('Failed to create friend request:', error);
+        return NextResponse.json({ error: 'Failed to create friend request' }, { status: 500 });
     }
 }

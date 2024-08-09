@@ -19,30 +19,58 @@ export async function DELETE(req: NextRequest) {
     return await deleteUser(req);
 }
 
-async function findUser(req: NextRequest) {
+export async function findUser(req: NextRequest) {
     const { searchParams } = new URL(req.url);
     const id = searchParams.get("id");
     const username = searchParams.get("username");
     const email = searchParams.get("email");
     const includeHabits = searchParams.get("includeHabits") === "true";
+    const includeFriends = searchParams.get("includeFriends") === "true";
+    const includeFriendRequests = searchParams.get("includeFriendRequests") === "true";
 
     try {
         let user;
 
+        const userQuery = {
+            select: {
+                id: true,
+                username: true,
+                email: true,
+                profilePicture: true,
+                friends: true, // Assuming this is an array of user IDs
+                habits: includeHabits ? true : undefined,
+                receivedFriendRequests: includeFriendRequests
+                    ? {
+                        select: {
+                            id: true,
+                            status: true,
+                            sender: {
+                                select: {
+                                    id: true,
+                                    username: true,
+                                    profilePicture: true,
+                                },
+                            },
+                        },
+                    }
+                    : undefined,
+            },
+        };
+
         if (id) {
             user = await db.user.findUnique({
                 where: { id: Number(id) },
-                include: includeHabits ? { habits: true } : undefined,
+                ...userQuery,
             });
         } else if (username) {
             user = await db.user.findUnique({
                 where: { username: username },
-                include: includeHabits ? { habits: true } : undefined,
+                ...userQuery,
             });
         } else if (email) {
             user = await db.user.findUnique({
                 where: { email: email },
-                include: includeHabits ? { habits: true } : undefined,
+                ...userQuery,
             });
         }
 
@@ -51,6 +79,25 @@ async function findUser(req: NextRequest) {
                 { error: "User not found" },
                 { status: 404 }
             );
+        }
+
+        // If friends are included, fetch the detailed friend information
+        if (includeFriends && user.friends && user.friends.length > 0) {
+            const friends = await db.user.findMany({
+                where: {
+                    id: { in: user.friends },
+                },
+                select: {
+                    id: true,
+                    username: true,
+                    profilePicture: true,
+                },
+            });
+
+            user = { ...user, friends };
+        } else {
+            // Set friends to an empty array if not included
+            user.friends = [];
         }
 
         return NextResponse.json(user);
@@ -62,6 +109,7 @@ async function findUser(req: NextRequest) {
         );
     }
 }
+
 
 async function createUser(req: NextRequest) {
     const { email, totalReward = 0, friends = [] } = await req.json();
