@@ -15,7 +15,7 @@ const habits = [
     {
         title: "Do Thikr",
         emoji: "📿",
-        total: "3900",
+        total: "3,900",
         time: "or 65 hours of dhikr!",
         page: "15 minutes",
         perDay: "5 days",

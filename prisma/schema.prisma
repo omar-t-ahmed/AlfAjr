@@ -8,15 +8,35 @@ generator client {
 }
 
 model User {
-  id             Int      @id @default(autoincrement())
-  email          String   @unique
-  username       String   @unique
-  habits         Habit[]  @relation("UserHabits")
-  friends        String[]
-  totalReward    Int
-  profilePicture Int      @default(0)
-  createdAt      DateTime @default(now())
-  updatedAt     DateTime @updatedAt @default(now())
+  id                   Int       @id @default(autoincrement())
+  email                String    @unique
+  username             String    @unique
+  habits               Habit[]   @relation("UserHabits")
+
+  friends              Int[]     // Array of user IDs representing friends
+
+  totalReward          Int
+  profilePicture       Int       @default(0)
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @updatedAt @default(now())
+
+  sentFriendRequests   Friend[]  @relation("UserSender")
+  receivedFriendRequests Friend[] @relation("UserReceiver")
+}
+
+model Friend {
+  id          Int          @id @default(autoincrement())
+  senderId    Int
+  receiverId  Int
+  status      RequestStatus @default(PENDING)
+
+  sender      User         @relation("UserSender", fields: [senderId], references: [id])
+  receiver    User         @relation("UserReceiver", fields: [receiverId], references: [id])
+
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @default(now())
+
+  @@unique([senderId, receiverId])
 }
 
 model Habit {
@@ -42,6 +62,12 @@ enum Unit {
   Verse
   Unit
   Minute
+}
+
+enum RequestStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
 }
 
 model Support {
