@@ -4,8 +4,15 @@ import { PrismaClient } from '@prisma/client';
 const db = new PrismaClient();
 
 export async function GET(req: NextRequest, { params }: { params: { id: string } }) {
-  const userId = Number(params.id); // Convert the string 'id' to a number
+  // Ensure that params.id is defined
+  if (!params || !params.id) {
+    return NextResponse.json({ error: 'Invalid request: ID is missing' }, { status: 400 });
+  }
 
+  // Convert the string 'id' to a number
+  const userId = Number(params.id);
+
+  // Check if the userId is a valid number
   if (isNaN(userId)) {
     return NextResponse.json({ error: 'Invalid user ID' }, { status: 400 });
   }
@@ -19,12 +26,13 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
       },
     });
 
+    // Check if the user exists
     if (!user) {
       return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }
 
     // If the user has no friends, return an empty array
-    if (!user.friends.length) {
+    if (!user.friends || user.friends.length === 0) {
       return NextResponse.json([]);
     }
 
