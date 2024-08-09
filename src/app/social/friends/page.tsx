@@ -5,6 +5,8 @@ import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 import ProfilePicture from "@/components/ProfilePicture";
 import axios from "axios";
 import { useAuth } from "@/lib/useAuth";
+import loadingGif from "../../../../public/Ellipsis@1x-1.3s-200px-200px.gif";
+import Image from "next/image";
 
 interface Friend {
     id: number;
@@ -64,23 +66,6 @@ const FriendsPage: React.FC = () => {
         }
     }, [user?.email]);
 
-    const friendsList = useMemo(() => (
-        userData?.friends?.map(friend => (
-            <div key={friend.id} className="flex items-center justify-between p-2 mb-2 border border-zinc-800 rounded">
-                <div className="flex items-center">
-                    <ProfilePicture profilePictureNumber={friend.profilePicture} />
-                    <span className="ml-4 text-xl">{friend.username}</span>
-                </div>
-                <button
-                    className="bg-red-500 text-white text-sm px-2 py-2 rounded"
-                    onClick={() => handleRemoveFriend(friend.id)}  // Pass friend's ID here
-                >
-                    Remove
-                </button>
-            </div>
-        ))
-    ), [userData?.friends]);
-
     const handleRemoveFriend = async (friendId: number) => {
         try {
             const response = await axios.delete('/api/friendRequests', {
@@ -109,6 +94,23 @@ const FriendsPage: React.FC = () => {
             console.error('Failed to remove friend:', error);
         }
     };
+
+    const friendsList = useMemo(() => (
+        userData?.friends?.map(friend => (
+            <div key={friend.id} className="flex items-center justify-between p-2 mb-2 border border-zinc-800 rounded">
+                <div className="flex items-center">
+                    <ProfilePicture profilePictureNumber={friend.profilePicture} />
+                    <span className="ml-4 text-xl">{friend.username}</span>
+                </div>
+                <button
+                    className="bg-red-500 text-white text-sm px-2 py-2 rounded"
+                    onClick={() => handleRemoveFriend(friend.id)}  // Pass friend's ID here
+                >
+                    Remove
+                </button>
+            </div>
+        ))
+    ), [userData?.friends, handleRemoveFriend]);
 
     const handleAcceptFriendRequest = async (requestId: number) => {
         try {
@@ -250,7 +252,7 @@ const FriendsPage: React.FC = () => {
                         <div className="font-bold text-4xl my-6">Your Friends 😎</div>
                         {loading ? (
                             <div className="text-green-600 text-2xl mt-8 font-semibold">
-                                Loading friends...
+                                <Image src={loadingGif} alt="Loading..." className="w-20 h-20" />
                             </div>
                         ) : (
                             <>

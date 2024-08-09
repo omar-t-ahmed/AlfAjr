@@ -19,7 +19,7 @@ export async function DELETE(req: NextRequest) {
     return await deleteUser(req);
 }
 
-export async function findUser(req: NextRequest) {
+async function findUser(req: NextRequest) {
     const { searchParams } = new URL(req.url);
     const id = searchParams.get("id");
     const username = searchParams.get("username");
