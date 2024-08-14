@@ -17,10 +17,12 @@ import {
 } from "@/components/ui/dropdown-menu";
 import menuIcon from "../../public/icons8-hamburger-menu-50.png";
 import { useRouter } from 'next/navigation';
+import { useEffect, useState } from "react";
 
 const Navbar = () => {
     const { user } = useAuth();
     const router = useRouter();
+    const [isAdmin, setIsAdmin] = useState(false);
 
     const handleSignOut = async () => {
         try {
@@ -34,6 +36,13 @@ const Navbar = () => {
     if (!router) {
         return null; 
     }
+
+    useEffect(() => {
+        if (user?.email && ['hasanhuda037@gmail.com', 'omartahmed@gmail.com', 'tkhan271828@gmail.com', 'saqifabedin@gmail.com'].includes(user.email)) {
+            setIsAdmin(true);
+        }
+    }, [user]);
+
 
     return (
         <nav className="sticky z-[100] h-14 inset-x-0 top-0 w-full border-b border-gray-900 bg-zinc-800 backdrop-blur-lg transition-all text-white">
@@ -66,6 +75,17 @@ const Navbar = () => {
                                     >
                                         Sign out
                                     </button>
+                                    {isAdmin && (
+                                        <Link
+                                            href="/admin/dashboard"
+                                            className={buttonVariants({
+                                                size: "sm",
+                                                variant: "ghost",
+                                            })}
+                                        >
+                                            Admin Dashboard
+                                        </Link>
+                                    )}
                                     <Link
                                         href="/social/friends"
                                         className={buttonVariants({
