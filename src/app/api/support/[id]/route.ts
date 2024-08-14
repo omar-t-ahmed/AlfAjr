@@ -5,8 +5,23 @@ export async function GET(req: NextRequest) {
     return await getSupport(req);
 }
 
-export async function PATCH(req: NextRequest) {
-    return await updateSupport(req);
+export async function PATCH(req: NextRequest, { params }: { params: { id: string } }) {
+    const id = params.id; // Extract the ID from the dynamic route
+    const { status } = await req.json();
+
+    try {
+        const support = await db.support.update({
+            where: { id: Number(id) },
+            data: { status },
+        });
+        return NextResponse.json(support);
+    } catch (error) {
+        console.error("Failed to update support request:", error);
+        return NextResponse.json(
+            { error: "Failed to update support request" },
+            { status: 500 }
+        );
+    }
 }
 
 export async function DELETE(req: NextRequest) {

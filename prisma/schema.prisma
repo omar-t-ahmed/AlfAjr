@@ -18,6 +18,12 @@ model User {
   updatedAt            DateTime  @updatedAt @default(now())
   sentFriendRequests   Friend[]  @relation("UserSender")
   receivedFriendRequests Friend[] @relation("UserReceiver")
+  role                 Role      @default(USER)
+}
+
+enum Role {
+  ADMIN
+  USER
 }
 
 model Friend {
