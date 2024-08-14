@@ -22,3 +22,18 @@ export enum Unit {
   Unit = "Unit",
   Minute = "Minute",
 }
+
+export interface Session {
+  id: number;
+  habitId: number;
+  worship: string;
+  quantity: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface User {
+  id: number;
+  email: string;
+  username: string;
+}

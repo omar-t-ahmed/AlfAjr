@@ -7,18 +7,19 @@ generator client {
 }
 
 model User {
-  id                   Int       @id @default(autoincrement())
-  email                String    @unique
-  username             String    @unique
-  habits               Habit[]   @relation("UserHabits")
-  friends              Int[]     // Array of user IDs representing friends
-  totalReward          Int
-  profilePicture       Int       @default(0)
-  createdAt            DateTime  @default(now())
-  updatedAt            DateTime  @updatedAt @default(now())
-  sentFriendRequests   Friend[]  @relation("UserSender")
-  receivedFriendRequests Friend[] @relation("UserReceiver")
-  role                 Role      @default(USER)
+  id                     Int       @id @default(autoincrement())
+  email                  String    @unique
+  username               String    @unique
+  habits                 Habit[]   @relation("UserHabits")
+  friends                Int[]     // Array of user IDs representing friends
+  totalReward            Int
+  profilePicture         Int       @default(0)
+  createdAt              DateTime  @default(now())
+  updatedAt              DateTime  @updatedAt @default(now())
+  sentFriendRequests     Friend[]  @relation("UserSender")
+  receivedFriendRequests Friend[]  @relation("UserReceiver")
+  role                   Role      @default(USER)
+  sessions               Session[] @relation("UserSessions")
 }
 
 enum Role {
@@ -31,10 +32,10 @@ model Friend {
   senderId    Int
   receiverId  Int
   status      RequestStatus @default(PENDING)
-  sender      User         @relation("UserSender", fields: [senderId], references: [id])
-  receiver    User         @relation("UserReceiver", fields: [receiverId], references: [id])
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @default(now())
+  sender      User          @relation("UserSender", fields: [senderId], references: [id])
+  receiver    User          @relation("UserReceiver", fields: [receiverId], references: [id])
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @default(now())
   @@unique([senderId, receiverId])
 }
 
@@ -46,8 +47,23 @@ model Habit {
   dailyQuantity Float
   unit          Unit
   reward        Float
+  streak        Int      @default(0)  // Added streak field
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt @default(now())
+  sessions      Session[] @relation("HabitSessions")
+}
+
+model Session {
+  id          Int      @id @default(autoincrement())
+  userId      Int
+  user        User     @relation("UserSessions", fields: [userId], references: [id])
+  habitId     Int
+  habit       Habit    @relation("HabitSessions", fields: [habitId], references: [id])
+  worship     Worship  // Store the worship type
+  quantity    Float
+  date        DateTime @default(now())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt @default(now())
 }
 
 enum Worship {
