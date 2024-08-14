@@ -23,6 +23,13 @@ const Navbar = () => {
     const { user } = useAuth();
     const router = useRouter();
     const [isAdmin, setIsAdmin] = useState(false);
+    
+    useEffect(() => {
+        if (user?.email && ['hasanhuda037@gmail.com', 'omartahmed@gmail.com', 'tkhan271828@gmail.com', 'saqifabedin@gmail.com'].includes(user?.email)) {
+            setIsAdmin(true);
+        }
+    }, [user]);
+
 
     const handleSignOut = async () => {
         try {
@@ -36,12 +43,6 @@ const Navbar = () => {
     if (!router) {
         return null; 
     }
-
-    useEffect(() => {
-        if (user?.email && ['hasanhuda037@gmail.com', 'omartahmed@gmail.com', 'tkhan271828@gmail.com', 'saqifabedin@gmail.com'].includes(user.email)) {
-            setIsAdmin(true);
-        }
-    }, [user]);
 
 
     return (
